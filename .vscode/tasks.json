@@ -1,0 +1,82 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cmake",
+            "type": "shell",
+            "command": "cmake ../..",
+            "options": {
+                "cwd": "${workspaceFolder}/build/release/"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "build game",
+            "type": "shell",
+            "command": "make -j 8",
+            "options": {
+                "cwd": "${workspaceFolder}/build/release/"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "dependsOn": "cmake"
+        },
+        {
+            "label": "run game",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/release/game",
+            "options": {
+                "cwd": "${workspaceFolder}/run/"
+            },
+            "group": {
+                "kind": "test",
+                "isDefault": false
+            },
+        },
+        {
+            "label": "run game (+build)",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/release/game",
+            "options": {
+                "cwd": "${workspaceFolder}/run/"
+            },
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "dependsOn": "build game"
+        },
+
+        // debug
+        {
+            "label": "debug: cmake",
+            "type": "shell",
+            "command": "cmake -DCMAKE_BUILD_TYPE=Debug ../..",
+            "options": {
+                "cwd": "${workspaceFolder}/build/debug/"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "debug: build game",
+            "type": "shell",
+            "command": "make -j 8",
+            "options": {
+                "cwd": "${workspaceFolder}/build/debug/"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "dependsOn": "debug cmake"
+        },
+    ]
+}
