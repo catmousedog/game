@@ -2,7 +2,6 @@
 build/
 
 # run files
-run/
 
 # keep .vscode files though
 # .vscode/
