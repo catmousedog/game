@@ -1,22 +1,23 @@
 #include <regex>
 
 #include "Keybinds.hpp"
-#include "Utils.hpp"
-#include "Error.hpp"
+#include "../util/Utils.hpp"
+#include "../util/Error.hpp"
 
 #define KEYMAP_ENTRY(KEY)                    \
     {                                        \
         StringUtils::toLower(#KEY), Key::KEY \
     }
 
+#define WHEN_ENTRY(WHEN)                        \
+    {                                           \
+        StringUtils::toLower(#WHEN), When::WHEN \
+    }
+
 #define ACTIONMAP_ENTRY(ACT)                    \
     {                                           \
         StringUtils::toLower(#ACT), Action::ACT \
     }
-
-static const std::unordered_map<string, Action> actionMap = {
-    ACTIONMAP_ENTRY(Exit)
-};
 
 static const std::unordered_map<string, Key> keyMap = {
     KEYMAP_ENTRY(A),
@@ -106,23 +107,37 @@ static const std::unordered_map<string, Key> keyMap = {
     KEYMAP_ENTRY(Numpad0),
 };
 
-KeyPressed parseKeybind(string keyString)
+static const std::unordered_map<string, When> whenMap = {
+    WHEN_ENTRY(All),
+    WHEN_ENTRY(MainMenu),
+    WHEN_ENTRY(Playing),
+};
+
+static const std::unordered_map<string, Action> actionMap = {
+    ACTIONMAP_ENTRY(Exit),
+    ACTIONMAP_ENTRY(Test),
+    ACTIONMAP_ENTRY(Sprint),
+};
+
+KeyBind parseKeybind(string keyString)
 {
     keyString = StringUtils::toLower(keyString);
-    KeyPressed keyPressed;
+    KeyBind keyPressed;
 
-    std::regex regex(R"((\w+)\+?(\w+))");
+    std::regex regex(R"((\w+)\+?(\w+)?)");
     std::smatch match;
 
     if (std::regex_match(keyString, match, regex))
     {
-        string modifier, key;
+        string modifier = match[1].str();
+        string key = match[2].str();
 
-        if (match.size() == 3)
+        if (key.empty()) // two matches (maybe fix this later, it's unituitive)
         {
-            modifier = match[1].str();
-            key = match[2].str();
-
+            key = modifier;
+        }
+        else
+        {
             if (modifier == "ctrl")
                 keyPressed.control = true;
             else if (modifier == "shift")
@@ -131,10 +146,6 @@ KeyPressed parseKeybind(string keyString)
                 keyPressed.alt = true;
             else
                 PRINT_ERROR("Modifier '{}' not recognized in keybind '{}'", modifier, keyString);
-        }
-        else
-        {
-            key = match[1].str();
         }
 
         keyPressed.code = keyMap.at(key);
@@ -148,18 +159,57 @@ KeyPressed parseKeybind(string keyString)
     return keyPressed;
 }
 
-Action parseAction(string actionString)
+std::pair<When, Action> parseWhenAction(string whenActionString)
 {
-    actionString = StringUtils::toLower(actionString);
+    std::pair<When, Action> out;
 
+    whenActionString = StringUtils::toLower(whenActionString);
+    auto split = StringUtils::split(whenActionString, ".");
+
+    string whenString;
+    string actionString;
+
+    if (split.size() > 2)
+        PRINT_ERROR("whenActionString contained more than 1 '.': ", whenActionString);
+
+    // make util function for below as this is quite recurring code (I think std has this actually)
+    if (split.size() == 1)
+    {
+        actionString = split[0];
+    }
+    else
+    {
+        whenString = split[0];
+        actionString = split[1];
+    }
+
+    // When
+    auto whenIt = whenMap.find(whenString);
+    if (whenIt != whenMap.end())
+    {
+        out.first = whenIt->second;
+    }
+    else if (whenString == "")
+    {
+        out.first = When::All;
+    }
+    else
+    {
+        PRINT_ERROR("When '{}' not recognized", whenString);
+        out.first = When::None;
+    }
+
+    // Action
     auto actionIt = actionMap.find(actionString);
     if (actionIt != actionMap.end())
     {
-        return actionIt->second;
+        out.second = actionIt->second;
     }
     else
     {
         PRINT_ERROR("Action '{}' not recognized", actionString);
-        return Action::None;
+        out.second = Action::None;
     }
+
+    return out;
 }

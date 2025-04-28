@@ -1,5 +1,15 @@
 {
     "exit": {
         "key": "ctrl+w"
+    },
+
+    "MainMenu.test":
+    {
+        "key": "t"
+    },
+
+    "Playing.sprint":
+    {
+        "key": "ctrl+a"
     }
 }

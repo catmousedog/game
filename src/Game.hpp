@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Configuration.hpp"
+#include "config/Configuration.hpp"
+#include "state/StateManager.hpp"
 
 class Game
 {
@@ -14,6 +15,10 @@ public:
      * @brief Destructor for the Game class.
      */
     ~Game();
+
+    void setup();
+
+    void run();
 
     /**
      * @brief Updates the SFML window.
@@ -32,7 +37,6 @@ public:
 
 private:
     Configuration _config;
-    sf::RenderWindow _window; // The main window of the game.
-    // sf::Clock clock;         // Clock to manage time.
-    // sf::Time deltaTime;      // Time elapsed since the last frame.
+    sf::RenderWindow _window;
+    StateManager _stateManager;
 };

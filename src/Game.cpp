@@ -1,51 +1,60 @@
 #include "Game.hpp"
-#include "Error.hpp"
+#include "util/Error.hpp"
+#include "state/MainMenuState.hpp"
 
-Game::Game() : _config()
+Game::Game()
 {
-    sf::Vector2u windowSize = {_config.windowWidth(), _config.windowHeight()};
-    _window = sf::RenderWindow(sf::VideoMode(windowSize), "game");
+}
 
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+Game::~Game()
+{
+}
 
+void Game::setup()
+{
+    _config.loadSettings();
+
+    // this can probably be cleaned up? maybe move code to State?
+    std::unique_ptr<State> mainMenu = std::make_unique<MainMenuState>();
+    mainMenu->setup(_config);
+    _stateManager.push(std::move(mainMenu));
+
+    _window = sf::RenderWindow(sf::VideoMode({_config.windowWidth(), _config.windowHeight()}), "game");
+}
+
+void Game::run()
+{
     bool running = true;
-    while (_window.isOpen() && running)
+    while (running)
     {
+        _window.clear();
         if (!updateSFML())
             running = false;
         if (!update())
             running = false;
         if (!render())
             running = false;
-        _window.clear();
-        _window.draw(shape);
         _window.display();
     }
     _window.close();
 }
 
-Game::~Game()
-{
-    // Destructor implementation
-}
-
 bool Game::updateSFML()
 {
+    State *state = _stateManager.current();
     while (const std::optional event = _window.pollEvent())
     {
         if (event->is<sf::Event::Closed>())
             return false;
 
-        if (event->is<sf::Event::KeyPressed>())
+        if (event->is<KeyPressed>())
         {
-            const sf::Event::KeyPressed *SFML_key = event->getIf<sf::Event::KeyPressed>();
-            Action action = _config.getKeybind(*SFML_key);
+            const KeyPressed &SFML_key = *event->getIf<KeyPressed>();
+            Action action = state->getAction(SFML_key);
 
             if (action != Action::None)
             {
-                // perform action
-                PRINT_DEBUG("{}", (int)action);
+                state->handleAction(action);
 
                 if (action == Action::Exit)
                     return false;
@@ -57,12 +66,20 @@ bool Game::updateSFML()
 
 bool Game::update()
 {
-    // Update logic
-    return true;
+    static sf::Clock clock;
+    float dt = clock.restart().asSeconds();
+
+    if (auto *state = _stateManager.current())
+        state->update(dt);
+
+    return !_stateManager.empty();
 }
 
 bool Game::render()
 {
-    // Render logic
+    _window.clear();
+    if (auto *state = _stateManager.current())
+        state->render(_window);
+    _window.display();
     return true;
 }
