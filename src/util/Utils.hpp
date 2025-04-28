@@ -27,4 +27,13 @@ public:
         result.push_back(str.substr(start, end));
         return result;
     }
+
+    static std::pair<string, string> splitOnce(const string &str, const string &sep)
+    {
+        string::size_type pos = str.find(sep);
+        if (pos != std::string::npos)
+            return {str.substr(0, pos), str.substr(pos + sep.length())};
+        else
+            return {str, ""};
+    }
 };

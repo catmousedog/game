@@ -10,8 +10,6 @@
 using json = nlohmann::json;
 using Path = std::filesystem::path;
 
-using KeyMap = std::unordered_map<KeyBind, Action>;
-
 // ======= Constants ======= //
 #define CONFIGURATION_DIR "config/"
 

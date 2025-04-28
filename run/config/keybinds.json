@@ -1,14 +1,14 @@
 {
-    "exit": {
+    "Global.Exit": {
         "key": "ctrl+w"
     },
 
-    "MainMenu.test":
+    "MainMenu.Test":
     {
         "key": "t"
     },
 
-    "Playing.sprint":
+    "Playing.Sprint":
     {
         "key": "ctrl+a"
     }

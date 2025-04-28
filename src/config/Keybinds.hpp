@@ -41,22 +41,6 @@ namespace std
     };
 }
 
-enum class When
-{
-    None,
-    All,
-    MainMenu,
-    Playing
-};
-
-enum class Action
-{
-    None,
-    Exit,
-    Test,
-    Sprint
-};
-
 KeyBind parseKeybind(string keyString);
 
-std::pair<When, Action> parseWhenAction(string whenActionString);
+std::pair<string, string> parseAction(const string& whenActionString);

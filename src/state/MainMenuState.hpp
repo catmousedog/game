@@ -4,14 +4,30 @@
 
 class MainMenuState : public State
 {
+
+    // ======= Action Enum ======= //
+private:
+    enum Action
+    {
+        None = ACTION_NONE,
+        Test,
+    };
+
+    // ======= Construction ======= //
 public:
     MainMenuState();
 
-    void handleAction(Action action) override;
+    const ActionMap setupActionMap() const override;
+
+    // ======= Update ======= //
 
     void update(float dt) override;
 
     void render(sf::RenderWindow &window) override;
 
-    When when() const override { return When::MainMenu; }
+    // ======= Keybinds ======= //
+
+    void handleAction(ActionID action) override;
+
+    string name() const override { return "MainMenu"; }
 };

@@ -107,18 +107,6 @@ static const std::unordered_map<string, Key> keyMap = {
     KEYMAP_ENTRY(Numpad0),
 };
 
-static const std::unordered_map<string, When> whenMap = {
-    WHEN_ENTRY(All),
-    WHEN_ENTRY(MainMenu),
-    WHEN_ENTRY(Playing),
-};
-
-static const std::unordered_map<string, Action> actionMap = {
-    ACTIONMAP_ENTRY(Exit),
-    ACTIONMAP_ENTRY(Test),
-    ACTIONMAP_ENTRY(Sprint),
-};
-
 KeyBind parseKeybind(string keyString)
 {
     keyString = StringUtils::toLower(keyString);
@@ -159,57 +147,7 @@ KeyBind parseKeybind(string keyString)
     return keyPressed;
 }
 
-std::pair<When, Action> parseWhenAction(string whenActionString)
+std::pair<string, string> parseAction(const string& actionString)
 {
-    std::pair<When, Action> out;
-
-    whenActionString = StringUtils::toLower(whenActionString);
-    auto split = StringUtils::split(whenActionString, ".");
-
-    string whenString;
-    string actionString;
-
-    if (split.size() > 2)
-        PRINT_ERROR("whenActionString contained more than 1 '.': ", whenActionString);
-
-    // make util function for below as this is quite recurring code (I think std has this actually)
-    if (split.size() == 1)
-    {
-        actionString = split[0];
-    }
-    else
-    {
-        whenString = split[0];
-        actionString = split[1];
-    }
-
-    // When
-    auto whenIt = whenMap.find(whenString);
-    if (whenIt != whenMap.end())
-    {
-        out.first = whenIt->second;
-    }
-    else if (whenString == "")
-    {
-        out.first = When::All;
-    }
-    else
-    {
-        PRINT_ERROR("When '{}' not recognized", whenString);
-        out.first = When::None;
-    }
-
-    // Action
-    auto actionIt = actionMap.find(actionString);
-    if (actionIt != actionMap.end())
-    {
-        out.second = actionIt->second;
-    }
-    else
-    {
-        PRINT_ERROR("Action '{}' not recognized", actionString);
-        out.second = Action::None;
-    }
-
-    return out;
+    return StringUtils::splitOnce(StringUtils::toLower(actionString), ".");;
 }

@@ -50,14 +50,13 @@ bool Game::updateSFML()
         if (event->is<KeyPressed>())
         {
             const KeyPressed &SFML_key = *event->getIf<KeyPressed>();
-            Action action = state->getAction(SFML_key);
+            ActionID action = state->getAction(SFML_key);
 
-            if (action != Action::None)
+            if (action != ACTION_NONE)
             {
                 state->handleAction(action);
 
-                if (action == Action::Exit)
-                    return false;
+                // global actions here?
             }
         }
     }

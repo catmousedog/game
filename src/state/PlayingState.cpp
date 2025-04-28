@@ -1,8 +1,19 @@
 #include "PlayingState.hpp"
 
-PlayingState::PlayingState() {}
+PlayingState::PlayingState() : State() {}
 
-void PlayingState::handleAction(Action action) {}
+const ActionMap PlayingState::setupActionMap() const
+{
+    return {
+        ACTIONMAP_ENTRY(None),
+        ACTIONMAP_ENTRY(Sprint),
+    };
+}
+
+void PlayingState::handleAction(ActionID action)
+{
+    //
+}
 
 void PlayingState::update(float dt) {}
 

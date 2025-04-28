@@ -1,14 +1,19 @@
 #include "MainMenuState.hpp"
 #include "../util/Error.hpp"
 
-#include <iostream>
-
 MainMenuState::MainMenuState() : State() {}
 
-void MainMenuState::handleAction(Action action)
+const ActionMap MainMenuState::setupActionMap() const
 {
-    if (action == Action::Test)
-        PRINT_DEBUG("test{}", 0);
+    return {
+        ACTIONMAP_ENTRY(None),
+        ACTIONMAP_ENTRY(Test),
+    };
+}
+
+void MainMenuState::handleAction(ActionID action)
+{
+    PRINT_DEBUG("MainMenuState::handleAction: {}", action);
 }
 
 void MainMenuState::update(float dt) {}

@@ -2,31 +2,37 @@
 #include "../util/Error.hpp"
 #include "../config/Configuration.hpp"
 
-State::State()
-{
-}
+State::State() {}
 
 void State::setup(const Configuration &config)
 {
+    _actionMap = setupActionMap();
     config.loadKeyBinds(*this);
 }
 
-Action State::getAction(const KeyBind &keyBind)
+ActionID State::getAction(const KeyBind &keyBind) const
 {
     auto it = _keyBinds.find(keyBind);
     if (it != _keyBinds.end())
         return it->second;
-    else
-        return Action::None;
+
+    return ACTION_NONE;
 }
 
-bool State::addKeyBind(const KeyBind &keyBind, Action action)
+ActionID State::getActionID(const string &actionString) const
 {
-    if (action == Action::None)
-    {
-        PRINT_ERROR("None keybind encountered: {}->None", (int)keyBind.code);
+    auto it = _actionMap.find(actionString);
+    if (it != _actionMap.end())
+        return it->second;
+
+    return ACTION_NONE;
+}
+
+bool State::addKeyBind(const KeyBind &keyBind, const string &actionString)
+{
+    ActionID action = getActionID(actionString);
+    if (action == ACTION_NONE)
         return false;
-    }
 
     if (getAction(keyBind) != action)
     {

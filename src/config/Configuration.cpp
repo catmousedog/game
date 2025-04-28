@@ -22,27 +22,27 @@ void Configuration::loadSettings()
 
 void Configuration::loadKeyBinds(State &state) const
 {
-    for (const auto &[whenActionString, items] : _keyBindsJSON.items())
+    for (const auto &[stateActionString, items] : _keyBindsJSON.items())
     {
         string keyString = items.at("key").get<string>();
 
         KeyBind keyBind = parseKeybind(keyString);
-        auto whenAction = parseWhenAction(whenActionString);
-
-        When when = whenAction.first;
-        Action action = whenAction.second;
+        auto [stateString, actionString] = parseAction(stateActionString);
 
         // when or action was not found
-        if (when == When::None || action == Action::None)
-            continue;
-
-        // when this state
-        if (when != When::All && state.when() != when)
-            continue;
-
-        if (!state.addKeyBind(keyBind, action))
+        if (stateString.empty() || actionString.empty())
         {
-            PRINT_ERROR("Duplicate keybind {}->{}", keyString, whenActionString);
+            PRINT_ERROR("State.Action '{}' not recognized", actionString);
+            continue;
+        }
+
+        // skip not this state
+        if (stateString != StringUtils::toLower(state.name()))
+            continue;
+
+        if (!state.addKeyBind(keyBind, actionString))
+        {
+            PRINT_ERROR("Could not add keybind: {}.{}->{}", stateString, keyString, actionString);
             continue;
         }
     }

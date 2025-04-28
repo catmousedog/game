@@ -4,14 +4,29 @@
 
 class PlayingState : public State
 {
+    // ======= Action Enum ======= //
+private:
+    enum Action
+    {
+        None = ACTION_NONE,
+        Sprint,
+    };
+
+    // ======= Construction ======= //
 public:
     PlayingState();
 
-    void handleAction(Action action) override;
+    const ActionMap setupActionMap() const override;
+
+    // ======= Update ======= //
 
     void update(float dt) override;
 
     void render(sf::RenderWindow &window) override;
 
-    When when() const override { return When::Playing; }
+    // ======= Keybinds ======= //
+
+    void handleAction(ActionID action) override;
+
+    string name() const override { return "Playing"; }
 };
