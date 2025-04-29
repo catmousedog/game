@@ -26,7 +26,7 @@ public:
 
     // ======= Keybinds ======= //
 
-    void handleAction(ActionID action) override;
+    GameAction handleAction(ActionID action) override;
 
     string name() const override { return "Playing"; }
 };

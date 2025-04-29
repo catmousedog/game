@@ -10,9 +10,15 @@ private:
     std::stack<std::unique_ptr<State>> _states;
 
 public:
-    // look up why && is not possible? why std::move is though
     void push(std::unique_ptr<State> state) {
         _states.push(std::move(state));
+    }
+
+    template <typename T>
+    void pushState(const Configuration& config) {
+        auto state = std::make_unique<T>();
+        state->setup(config);
+        push(std::move(state));
     }
 
     void pop() {

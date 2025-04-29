@@ -1,15 +1,5 @@
 {
-    "Global.Exit": {
+    "MainMenu.Exit": {
         "key": "ctrl+w"
-    },
-
-    "MainMenu.Test":
-    {
-        "key": "t"
-    },
-
-    "Playing.Sprint":
-    {
-        "key": "ctrl+a"
     }
 }

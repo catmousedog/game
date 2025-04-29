@@ -16,27 +16,46 @@ public:
      */
     ~Game();
 
+    /**
+     * @brief Sets up the game.
+     */
     void setup();
 
+    /**
+     * @brief Starts the game loop.
+     */
     void run();
+
+    /**
+     * @brief Stop the game loop at the end of this tick.
+     */
+    void stop();
 
     /**
      * @brief Updates the SFML window.
      */
-    bool updateSFML();
+    void updateSFML();
 
     /**
      * @brief Runs the game loop.
      */
-    bool update();
+    void update();
 
     /**
      * @brief Runs the render loop.
      */
-    bool render();
+    void render();
+
+    /**
+     * @brief Handles the global Game Action.
+     * @param gameAction
+     */
+    void handleAction(GameAction gameAction);
 
 private:
     Configuration _config;
     sf::RenderWindow _window;
     StateManager _stateManager;
+
+    bool _running;
 };

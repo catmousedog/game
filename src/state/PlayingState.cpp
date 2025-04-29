@@ -10,9 +10,9 @@ const ActionMap PlayingState::setupActionMap() const
     };
 }
 
-void PlayingState::handleAction(ActionID action)
+GameAction PlayingState::handleAction(ActionID action)
 {
-    //
+    return GameAction::None;
 }
 
 void PlayingState::update(float dt) {}

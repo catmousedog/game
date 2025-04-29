@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <unordered_map>
 
+#include "GameAction.hpp"
 #include "../config/Keybinds.hpp"
 #include "../util/Utils.hpp"
 
@@ -18,8 +19,8 @@ constexpr ActionID ACTION_NONE = 0;
  * @param ACTION The action to define.
  * @return The action map entry: 'STATE'.'ACTION' -> STATE::ACTION
  */
-#define ACTIONMAP_ENTRY(ACTION)                                                            \
-    {                                                                                      \
+#define ACTIONMAP_ENTRY(ACTION)                       \
+    {                                                 \
         StringUtils::toLower(#ACTION), Action::ACTION \
     }
 
@@ -70,7 +71,7 @@ public:
      * @brief Handles a certain Derived::Acton.
      * @param action The action to handle.
      */
-    virtual void handleAction(ActionID action) = 0;
+    virtual GameAction handleAction(ActionID action) = 0;
 
     /**
      * @brief Returns the State name used in the keybinds.

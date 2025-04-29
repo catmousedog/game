@@ -10,7 +10,7 @@ private:
     enum Action
     {
         None = ACTION_NONE,
-        Test,
+        Exit,
     };
 
     // ======= Construction ======= //
@@ -27,7 +27,7 @@ public:
 
     // ======= Keybinds ======= //
 
-    void handleAction(ActionID action) override;
+    GameAction handleAction(ActionID action) override;
 
     string name() const override { return "MainMenu"; }
 };

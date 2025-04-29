@@ -14,38 +14,37 @@ void Game::setup()
 {
     _config.loadSettings();
 
-    // this can probably be cleaned up? maybe move code to State?
-    std::unique_ptr<State> mainMenu = std::make_unique<MainMenuState>();
-    mainMenu->setup(_config);
-    _stateManager.push(std::move(mainMenu));
+    _stateManager.pushState<MainMenuState>(_config);
 
     _window = sf::RenderWindow(sf::VideoMode({_config.windowWidth(), _config.windowHeight()}), "game");
 }
 
 void Game::run()
 {
-    bool running = true;
-    while (running)
+    _running = true;
+    while (_running)
     {
         _window.clear();
-        if (!updateSFML())
-            running = false;
-        if (!update())
-            running = false;
-        if (!render())
-            running = false;
+        updateSFML();
+        update();
+        render();
         _window.display();
     }
     _window.close();
 }
 
-bool Game::updateSFML()
+void Game::stop()
+{
+    _running = false;
+}
+
+void Game::updateSFML()
 {
     State *state = _stateManager.current();
     while (const std::optional event = _window.pollEvent())
     {
         if (event->is<sf::Event::Closed>())
-            return false;
+            return;
 
         if (event->is<KeyPressed>())
         {
@@ -54,16 +53,15 @@ bool Game::updateSFML()
 
             if (action != ACTION_NONE)
             {
-                state->handleAction(action);
-
-                // global actions here?
+                GameAction gameAction = state->handleAction(action);
+                // handle global actions indirectly invoked by the State
+                handleAction(gameAction);
             }
         }
     }
-    return true;
 }
 
-bool Game::update()
+void Game::update()
 {
     static sf::Clock clock;
     float dt = clock.restart().asSeconds();
@@ -71,14 +69,28 @@ bool Game::update()
     if (auto *state = _stateManager.current())
         state->update(dt);
 
-    return !_stateManager.empty();
+    if (_stateManager.empty())
+        stop();
 }
 
-bool Game::render()
+void Game::render()
 {
     _window.clear();
     if (auto *state = _stateManager.current())
         state->render(_window);
     _window.display();
-    return true;
+}
+
+void Game::handleAction(GameAction gameAction)
+{
+    switch (gameAction)
+    {
+    case GameAction::None:
+        break;
+    case GameAction::Exit:
+        stop();
+        break;
+    default:
+        break;
+    }
 }

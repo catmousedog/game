@@ -7,13 +7,19 @@ const ActionMap MainMenuState::setupActionMap() const
 {
     return {
         ACTIONMAP_ENTRY(None),
-        ACTIONMAP_ENTRY(Test),
+        ACTIONMAP_ENTRY(Exit),
     };
 }
 
-void MainMenuState::handleAction(ActionID action)
+GameAction MainMenuState::handleAction(ActionID action)
 {
-    PRINT_DEBUG("MainMenuState::handleAction: {}", action);
+    switch (action)
+    {
+    case Action::Exit:
+        return GameAction::Exit;
+    default:
+        break;
+    }
 }
 
 void MainMenuState::update(float dt) {}
