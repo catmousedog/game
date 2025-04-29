@@ -1,15 +1,14 @@
 #include "MainMenuState.hpp"
 #include "../util/Error.hpp"
 
-MainMenuState::MainMenuState() : State() {}
+// ======= Setup ======= //
 
-const ActionMap MainMenuState::setupActionMap() const
+void MainMenuState::setup(const Configuration &config)
 {
-    return {
-        ACTIONMAP_ENTRY(None),
-        ACTIONMAP_ENTRY(Exit),
-    };
+    State::setup(config);
 }
+
+// ======= Keybinds ======= //
 
 GameAction MainMenuState::handleAction(ActionID action)
 {
@@ -20,8 +19,21 @@ GameAction MainMenuState::handleAction(ActionID action)
     default:
         break;
     }
+    return GameAction::None;
 }
 
-void MainMenuState::update(float dt) {}
+void MainMenuState::update(float dt)
+{
+}
 
-void MainMenuState::render(sf::RenderWindow &window) {}
+void MainMenuState::render(sf::RenderWindow &window)
+{
+}
+
+const ActionMap MainMenuState::setupActionMap() const
+{
+    return {
+        ACTIONMAP_ENTRY(None),
+        ACTIONMAP_ENTRY(Exit),
+    };
+}

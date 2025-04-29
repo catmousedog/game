@@ -12,13 +12,11 @@ private:
         Sprint,
     };
 
-    // ======= Construction ======= //
+    // ======= Setup ======= //
 public:
-    PlayingState();
+    void setup(const Configuration& config) override;
 
-    const ActionMap setupActionMap() const override;
-
-    // ======= Update ======= //
+    // ======= State ======= //
 
     void update(float dt) override;
 
@@ -29,4 +27,7 @@ public:
     GameAction handleAction(ActionID action) override;
 
     string name() const override { return "Playing"; }
+
+private:
+    const ActionMap setupActionMap() const override;
 };

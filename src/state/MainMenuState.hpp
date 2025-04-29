@@ -1,10 +1,10 @@
 #pragma once
 
 #include "State.hpp"
+#include "../gui/GuiContainer.hpp"
 
 class MainMenuState : public State
 {
-
     // ======= Action Enum ======= //
 private:
     enum Action
@@ -13,13 +13,11 @@ private:
         Exit,
     };
 
-    // ======= Construction ======= //
+    // ======= Setup ======= //
 public:
-    MainMenuState();
+    void setup(const Configuration &config) override;
 
-    const ActionMap setupActionMap() const override;
-
-    // ======= Update ======= //
+    // ======= State ======= //
 
     void update(float dt) override;
 
@@ -30,4 +28,10 @@ public:
     GameAction handleAction(ActionID action) override;
 
     string name() const override { return "MainMenu"; }
+
+private:
+    const ActionMap setupActionMap() const override;
+
+    // ======= Variables ======= //
+    GuiContainer _gui;
 };

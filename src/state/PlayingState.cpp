@@ -1,13 +1,8 @@
 #include "PlayingState.hpp"
 
-PlayingState::PlayingState() : State() {}
-
-const ActionMap PlayingState::setupActionMap() const
+void PlayingState::setup(const Configuration &config)
 {
-    return {
-        ACTIONMAP_ENTRY(None),
-        ACTIONMAP_ENTRY(Sprint),
-    };
+    State::setup(config);
 }
 
 GameAction PlayingState::handleAction(ActionID action)
@@ -18,3 +13,11 @@ GameAction PlayingState::handleAction(ActionID action)
 void PlayingState::update(float dt) {}
 
 void PlayingState::render(sf::RenderWindow &window) {}
+
+const ActionMap PlayingState::setupActionMap() const
+{
+    return {
+        ACTIONMAP_ENTRY(None),
+        ACTIONMAP_ENTRY(Sprint),
+    };
+}

@@ -68,9 +68,6 @@ void Game::update()
 
     if (auto *state = _stateManager.current())
         state->update(dt);
-
-    if (_stateManager.empty())
-        stop();
 }
 
 void Game::render()
@@ -78,6 +75,9 @@ void Game::render()
     _window.clear();
     if (auto *state = _stateManager.current())
         state->render(_window);
+
+    
+
     _window.display();
 }
 

@@ -28,31 +28,22 @@ class Configuration;
 
 class State
 {
-
     // ======= Construction ======= //
 public:
+    State() = default;
+
     virtual ~State() = default;
 
-protected:
-    State();
+    // ======= Setup ======= //
 
-public:
     /**
      * @brief Sets up the state. The default implementation loads the keybinds from the configuration.
      * @param config The configuration to use.
      */
     virtual void setup(const Configuration &config);
 
-    /**
-     * @brief Sets up the action map. This should return a mapping of action strings to action IDs.
-     * The strings should point to the (untyped) Derived::Action enum, where Derived::Action::None
-     * =ACTION_NONE is the first element.
-     */
-    virtual const ActionMap setupActionMap() const = 0;
+    // ======= State ======= //
 
-    // ======= Update ======= //
-
-public:
     /**
      * @brief Updates the state.
      * @param dt Delta time since last frame.
@@ -102,6 +93,14 @@ private:
      */
     ActionID getActionID(const string &actionString) const;
 
+    /**
+     * @brief Sets up the action map. This should return a mapping of action strings to action IDs.
+     * The strings should point to the (untyped) Derived::Action enum, where Derived::Action::None
+     * =ACTION_NONE is the first element.
+     */
+    virtual const ActionMap setupActionMap() const = 0;
+
+private:
 private:
     // ======= Variables ======= //
     KeyMap _keyBinds;
