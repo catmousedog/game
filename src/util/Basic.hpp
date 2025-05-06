@@ -16,5 +16,6 @@
 
 using std::string;
 using std::vector;
+using std::array;
 using std::unique_ptr;
 using std::tuple;

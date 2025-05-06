@@ -4,8 +4,10 @@
 #include <unordered_map>
 
 #include "GameAction.hpp"
-#include "../config/Keybinds.hpp"
+#include "../config/Configuration.hpp"
 #include "../util/Utils.hpp"
+
+class Game;
 
 using ActionID = unsigned int;
 using ActionMap = std::unordered_map<string, ActionID>;
@@ -24,13 +26,11 @@ constexpr ActionID ACTION_NONE = 0;
         StringUtils::toLower(#ACTION), Action::ACTION \
     }
 
-class Configuration;
-
 class State
 {
     // ======= Construction ======= //
 public:
-    State() = default;
+    State(const Game &game, Configuration &config);
 
     virtual ~State() = default;
 
@@ -38,9 +38,8 @@ public:
 
     /**
      * @brief Sets up the state. The default implementation loads the keybinds from the configuration.
-     * @param config The configuration to use.
      */
-    virtual void setup(const Configuration &config);
+    virtual void setup();
 
     // ======= State ======= //
 
@@ -48,7 +47,7 @@ public:
      * @brief Updates the state.
      * @param dt Delta time since last frame.
      */
-    virtual void update(float dt) = 0;
+    virtual void update(double dt) = 0;
 
     /**
      * @brief Renders the state.
@@ -100,9 +99,16 @@ private:
      */
     virtual const ActionMap setupActionMap() const = 0;
 
-private:
-private:
+    // ======= Getters ======= //
+protected:
+    Configuration &config() const { return _config; }
+
     // ======= Variables ======= //
+protected:
+    const Game &_game;
+
+private:
+    Configuration &_config;
     KeyMap _keyBinds;
     ActionMap _actionMap;
 };

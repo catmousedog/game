@@ -15,10 +15,10 @@ public:
     }
 
     template <typename T>
-    void pushState(const Configuration &config)
+    void pushState(const Game& game, Configuration &config)
     {
-        auto state = std::make_unique<T>();
-        state->setup(config);
+        auto state = std::make_unique<T>(game, config);
+        state->setup();
         push(std::move(state));
     }
 

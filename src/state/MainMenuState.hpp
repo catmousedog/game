@@ -1,7 +1,7 @@
 #pragma once
 
 #include "State.hpp"
-#include "../gui/GuiContainer.hpp"
+#include "../gui/GuiFrameRate.hpp"
 
 class MainMenuState : public State
 {
@@ -13,13 +13,17 @@ private:
         Exit,
     };
 
+    // ======= Construction ======= //
+public:
+    MainMenuState(const Game &game, Configuration &config);
+
     // ======= Setup ======= //
 public:
-    void setup(const Configuration &config) override;
+    void setup() override;
 
     // ======= State ======= //
 
-    void update(float dt) override;
+    void update(double dt) override;
 
     void render(sf::RenderWindow &window) override;
 
@@ -33,5 +37,6 @@ private:
     const ActionMap setupActionMap() const override;
 
     // ======= Variables ======= //
-    GuiContainer _gui;
+public:
+    GuiFrameRate _guiFrameRate;
 };

@@ -8,12 +8,14 @@ class GuiText : public GuiElement
 {
 
 public:
-    GuiText(const sf::Font &font, const std::string &text) : _text(font, text) {}
+    GuiText(const sf::Font &font, const std::string &text, unsigned int char_size = 30U) : _text(font, text, char_size) {}
 
-    void update(float) override {}
+    void update(double) override {}
 
     void render(sf::RenderWindow &window) override
     {
+        _text.setStyle(sf::Text::Bold);
+        _text.setFillColor(sf::Color::Red);
         window.draw(_text);
     }
 

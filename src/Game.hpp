@@ -39,7 +39,7 @@ public:
     /**
      * @brief Runs the game loop.
      */
-    void update();
+    void update(double dt);
 
     /**
      * @brief Runs the render loop.
@@ -52,10 +52,40 @@ public:
      */
     void handleAction(GameAction gameAction);
 
+    // ======= Getters ======= //
+public:
+    /**
+     * @brief Calculates the desired time (s) between update ticks.
+     * @return Desired update time (s).
+     */
+    double getUpdateGoal() const { return 1.f / (_gameSpeed * _config.tickRate()); }
+
+    /**
+     * @brief Calculates the desired time (s) between render ticks.
+     * @return Desired render time (s).
+     */
+    double getRenderGoal() const { return 1.f / _config.frameRate(); }
+
+    array<double, 3> getDt() const { return {_SFML_dt, _update_dt, _render_dt}; }
+
+    // ======= Setters ======= //
+public:
 private:
+    //
     Configuration _config;
-    sf::RenderWindow _window;
     StateManager _stateManager;
 
+    // SFML
+    sf::Clock _clock;
+    sf::RenderWindow _window;
+
+    // variables
     bool _running;
+    double _gameSpeed = 1.;
+    // dt
+    double _SFML_dt;
+    double _update_dt;
+    double _render_dt;
+
+    double test;
 };

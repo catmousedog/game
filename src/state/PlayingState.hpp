@@ -12,13 +12,12 @@ private:
         Sprint,
     };
 
-    // ======= Setup ======= //
+    // ======= Construction ======= //
 public:
-    void setup(const Configuration& config) override;
 
     // ======= State ======= //
 
-    void update(float dt) override;
+    void update(double dt) override;
 
     void render(sf::RenderWindow &window) override;
 

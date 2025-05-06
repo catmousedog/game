@@ -31,7 +31,7 @@
             "type": "shell",
             "command": "${workspaceFolder}/build/release/game",
             "options": {
-                "cwd": "${workspaceFolder}/run/"
+                "cwd": "${workspaceFolder}"
             },
             "group": {
                 "kind": "test",
@@ -43,7 +43,7 @@
             "type": "shell",
             "command": "${workspaceFolder}/build/release/game",
             "options": {
-                "cwd": "${workspaceFolder}/run/"
+                "cwd": "${workspaceFolder}"
             },
             "group": {
                 "kind": "test",

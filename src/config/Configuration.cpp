@@ -3,6 +3,7 @@
 #include "Configuration.hpp"
 #include "../util/Error.hpp"
 #include "../util/Utils.hpp"
+#include "../state/State.hpp"
 
 Configuration::Configuration()
 {
@@ -12,12 +13,20 @@ Configuration::Configuration()
 
     _keyBindsJSON = json::parse(std::ifstream(_keyBindsPath));
     _settingsJSON = json::parse(std::ifstream(_settingsPath));
+
+    _resourceDir = RESOURCE_DIR;
+    _fontPath = (_resourceDir / "fonts/FreeMono.ttf");
+
+    if (!_font.openFromFile(_fontPath))
+        PRINT_ERROR("Failed to load font: {}", _fontPath.string());
 }
 
 void Configuration::loadSettings()
 {
     _windowWidth = _settingsJSON["windowWidth"].get<unsigned int>();
     _windowHeight = _settingsJSON["windowHeight"].get<unsigned int>();
+    _frameRate = _settingsJSON["frameRate"].get<unsigned int>();
+    _tickRate = _settingsJSON["tickRate"].get<unsigned int>();
 }
 
 void Configuration::loadKeyBinds(State &state) const

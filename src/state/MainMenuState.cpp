@@ -1,11 +1,36 @@
+#include <memory>
+#include <SFML/System/InputStream.hpp>
+
 #include "MainMenuState.hpp"
+#include "../Game.hpp"
 #include "../util/Error.hpp"
+#include "../gui/GuiText.hpp"
+#include "../gui/GuiFrameRate.hpp"
+
+// ======= Construction ======= //
+
+MainMenuState::MainMenuState(const Game &game, Configuration &config) : State(game, config), _guiFrameRate(config.font())
+{
+}
 
 // ======= Setup ======= //
 
-void MainMenuState::setup(const Configuration &config)
+void MainMenuState::setup()
 {
-    State::setup(config);
+    State::setup();
+}
+
+// ======= State ======= //
+
+void MainMenuState::update(double dt)
+{
+    _guiFrameRate.setDt(_game.getUpdateGoal(), _game.getRenderGoal(), _game.getDt());
+    _guiFrameRate.update(dt);
+}
+
+void MainMenuState::render(sf::RenderWindow &window)
+{
+    _guiFrameRate.render(window);
 }
 
 // ======= Keybinds ======= //
@@ -20,14 +45,6 @@ GameAction MainMenuState::handleAction(ActionID action)
         break;
     }
     return GameAction::None;
-}
-
-void MainMenuState::update(float dt)
-{
-}
-
-void MainMenuState::render(sf::RenderWindow &window)
-{
 }
 
 const ActionMap MainMenuState::setupActionMap() const

@@ -1,11 +1,13 @@
 #include "State.hpp"
-#include "../util/Error.hpp"
-#include "../config/Configuration.hpp"
 
-void State::setup(const Configuration &config)
+State::State(const Game& game, Configuration &config) : _game(game), _config(config)
+{
+}
+
+void State::setup()
 {
     _actionMap = setupActionMap();
-    config.loadKeyBinds(*this);
+    _config.loadKeyBinds(*this);
 }
 
 bool State::addKeyBind(const KeyBind &keyBind, const string &actionString)
