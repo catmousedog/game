@@ -15,7 +15,7 @@ public:
     }
 
     template <typename T>
-    void pushState(const Game& game, Configuration &config)
+    void pushState(Game &game, Configuration &config)
     {
         auto state = std::make_unique<T>(game, config);
         state->setup();
@@ -26,6 +26,13 @@ public:
     {
         if (!_states.empty())
             _states.pop();
+    }
+
+    template <typename T>
+    void replace(Game &game, Configuration &config)
+    {
+        pop();
+        pushState<T>(game, config);
     }
 
     State *current()

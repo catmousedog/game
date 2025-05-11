@@ -5,6 +5,8 @@
 
 class Game
 {
+
+    // ======= Construction ======= //
 public:
     /**
      * @brief Constructor for the Game class.
@@ -16,6 +18,7 @@ public:
      */
     ~Game();
 
+    // ======= State ======= //
     /**
      * @brief Sets up the game.
      */
@@ -46,12 +49,6 @@ public:
      */
     void render();
 
-    /**
-     * @brief Handles the global Game Action.
-     * @param gameAction
-     */
-    void handleAction(GameAction gameAction);
-
     // ======= Getters ======= //
 public:
     /**
@@ -69,9 +66,20 @@ public:
     array<double, 3> getDt() const { return {_SFML_dt, _update_dt, _render_dt}; }
 
     // ======= Setters ======= //
+
+    /**
+     * @brief Replaces the current state with a new state.
+     * @tparam T The type of the new state.
+     */
+    template <typename T>
+    void replaceState()
+    {
+        _stateManager.replace<T>(*this, _config);
+    }
+
 public:
+    // ======= Variables ======= //
 private:
-    //
     Configuration _config;
     StateManager _stateManager;
 

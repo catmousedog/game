@@ -2,49 +2,58 @@
 #include <SFML/System/InputStream.hpp>
 
 #include "MainMenuState.hpp"
+#include "PlayingState.hpp"
 #include "../Game.hpp"
 #include "../util/Error.hpp"
-#include "../gui/GuiText.hpp"
-#include "../gui/GuiFrameRate.hpp"
 
-// ======= Construction ======= //
-
-MainMenuState::MainMenuState(const Game &game, Configuration &config) : State(game, config), _guiFrameRate(config.font())
+MainMenuState::MainMenuState(Game &game, Configuration &config)
+    : State(game, config),
+      _guiFrameRate(config),
+      _playButton(config),
+      _exitButton(config)
 {
+    _playButton.setText("Play", 30U);
+    _playButton.setDimensions(config.absPos(0.5f, 0.5f), config.absPos(0.2f, 0.1f));
+    _playButton.setOnPress([this]()
+                           { _game.replaceState<PlayingState>(); });
+
+    _exitButton.setText("Exit", 30U);
+    _exitButton.setDimensions(config.absPos(0.5f, 0.6f), config.absPos(0.2f, 0.1f));
+    _exitButton.setOnPress([this]()
+                           { _game.stop(); });
 }
-
-// ======= Setup ======= //
-
-void MainMenuState::setup()
-{
-    State::setup();
-}
-
-// ======= State ======= //
 
 void MainMenuState::update(double dt)
 {
     _guiFrameRate.setDt(_game.getUpdateGoal(), _game.getRenderGoal(), _game.getDt());
+
     _guiFrameRate.update(dt);
+    _playButton.update(dt);
+    _exitButton.update(dt);
 }
 
 void MainMenuState::render(sf::RenderWindow &window)
 {
     _guiFrameRate.render(window);
+    _playButton.render(window);
+    _exitButton.render(window);
 }
 
-// ======= Keybinds ======= //
-
-GameAction MainMenuState::handleAction(ActionID action)
+void MainMenuState::handleAction(ActionID action)
 {
     switch (action)
     {
     case Action::Exit:
-        return GameAction::Exit;
+        _game.stop();
     default:
         break;
     }
-    return GameAction::None;
+}
+
+void MainMenuState::handleEvent(const sf::Event &event)
+{
+    _playButton.handleEvent(event);
+    _exitButton.handleEvent(event);
 }
 
 const ActionMap MainMenuState::setupActionMap() const

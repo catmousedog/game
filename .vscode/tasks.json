@@ -76,7 +76,7 @@
                 "kind": "build",
                 "isDefault": false
             },
-            "dependsOn": "debug cmake"
+            "dependsOn": "debug: cmake"
         },
     ]
 }

@@ -14,8 +14,11 @@ private:
 
     // ======= Construction ======= //
 public:
+    PlayingState(Game &game, Configuration &config);
 
     // ======= State ======= //
+
+    void setup() override;
 
     void update(double dt) override;
 
@@ -23,7 +26,9 @@ public:
 
     // ======= Keybinds ======= //
 
-    GameAction handleAction(ActionID action) override;
+    void handleAction(ActionID action) override;
+
+    void handleEvent(const sf::Event &event) override;
 
     string name() const override { return "Playing"; }
 

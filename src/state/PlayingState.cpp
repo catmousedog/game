@@ -1,18 +1,23 @@
 #include "PlayingState.hpp"
 
-// ======= Construction ======= //
+PlayingState::PlayingState(Game &game, Configuration &config)
+    : State(game, config)
+{
+}
 
-// ======= State ======= //
+void PlayingState::setup()
+{
+    State::setup();
+}
 
 void PlayingState::update(double dt) {}
 
 void PlayingState::render(sf::RenderWindow &window) {}
 
-// ======= Keybinds ======= //
+void PlayingState::handleAction(ActionID action) {}
 
-GameAction PlayingState::handleAction(ActionID action)
+void PlayingState::handleEvent(const sf::Event &event)
 {
-    return GameAction::None;
 }
 
 const ActionMap PlayingState::setupActionMap() const

@@ -1,6 +1,6 @@
 #include "State.hpp"
 
-State::State(const Game& game, Configuration &config) : _game(game), _config(config)
+State::State(Game &game, Configuration &config) : _game(game), _config(config)
 {
 }
 
@@ -10,13 +10,21 @@ void State::setup()
     _config.loadKeyBinds(*this);
 }
 
+void State::handleKeyPressed(const sf::Event::KeyPressed &keyPressed)
+{
+    ActionID action = getActionFromKeyBind(keyPressed);
+
+    if (action != ACTION_NONE)
+        handleAction(action);
+}
+
 bool State::addKeyBind(const KeyBind &keyBind, const string &actionString)
 {
-    ActionID action = getActionID(actionString);
+    ActionID action = getActionFromString(actionString);
     if (action == ACTION_NONE)
         return false;
 
-    if (getAction(keyBind) != action)
+    if (getActionFromKeyBind(keyBind) != action)
     {
         _keyBinds[keyBind] = action;
         return true;
@@ -27,7 +35,7 @@ bool State::addKeyBind(const KeyBind &keyBind, const string &actionString)
     }
 }
 
-ActionID State::getAction(const KeyBind &keyBind) const
+ActionID State::getActionFromKeyBind(const KeyBind &keyBind) const
 {
     auto it = _keyBinds.find(keyBind);
     if (it != _keyBinds.end())
@@ -36,7 +44,7 @@ ActionID State::getAction(const KeyBind &keyBind) const
     return ACTION_NONE;
 }
 
-ActionID State::getActionID(const string &actionString) const
+ActionID State::getActionFromString(const string &actionString) const
 {
     auto it = _actionMap.find(actionString);
     if (it != _actionMap.end())

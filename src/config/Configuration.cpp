@@ -23,8 +23,9 @@ Configuration::Configuration()
 
 void Configuration::loadSettings()
 {
-    _windowWidth = _settingsJSON["windowWidth"].get<unsigned int>();
-    _windowHeight = _settingsJSON["windowHeight"].get<unsigned int>();
+    unsigned int windowWidth = _settingsJSON["windowWidth"].get<unsigned int>();
+    unsigned int windowHeight = _settingsJSON["windowHeight"].get<unsigned int>();
+    _windowSize = sf::Vector2u(windowWidth, windowHeight);
     _frameRate = _settingsJSON["frameRate"].get<unsigned int>();
     _tickRate = _settingsJSON["tickRate"].get<unsigned int>();
 }
@@ -55,4 +56,14 @@ void Configuration::loadKeyBinds(State &state) const
             continue;
         }
     }
+}
+
+sf::Vector2f Configuration::absPos(const sf::Vector2f &pos) const
+{
+    return sf::Vector2f(pos.x * _windowSize.x, pos.y * _windowSize.y);
+}
+
+sf::Vector2f Configuration::absPos(float x, float y) const
+{
+    return sf::Vector2f(x * _windowSize.x, y * _windowSize.y);
 }

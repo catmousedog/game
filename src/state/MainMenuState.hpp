@@ -2,6 +2,7 @@
 
 #include "State.hpp"
 #include "../gui/GuiFrameRate.hpp"
+#include "../gui/GuiButton.hpp"
 
 class MainMenuState : public State
 {
@@ -15,11 +16,7 @@ private:
 
     // ======= Construction ======= //
 public:
-    MainMenuState(const Game &game, Configuration &config);
-
-    // ======= Setup ======= //
-public:
-    void setup() override;
+    MainMenuState(Game &game, Configuration &config);
 
     // ======= State ======= //
 
@@ -27,9 +24,11 @@ public:
 
     void render(sf::RenderWindow &window) override;
 
-    // ======= Keybinds ======= //
+    // ======= Event ======= //
 
-    GameAction handleAction(ActionID action) override;
+    void handleAction(ActionID action) override;
+
+    void handleEvent(const sf::Event &event) override;
 
     string name() const override { return "MainMenu"; }
 
@@ -39,4 +38,6 @@ private:
     // ======= Variables ======= //
 public:
     GuiFrameRate _guiFrameRate;
+    GuiButton _playButton;
+    GuiButton _exitButton;
 };

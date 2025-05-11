@@ -7,15 +7,23 @@
 class GuiText : public GuiElement
 {
 
+    // ======= Construction ======= //
 public:
-    GuiText(const sf::Font &font, const std::string &text, unsigned int char_size = 30U) : _text(font, text, char_size) {}
+    GuiText(const sf::Font &font,
+            const std::string &text,
+            unsigned int char_size = 30U)
+        : _text(font, text, char_size)
+    {
+        _text.setStyle(sf::Text::Bold);
+        _text.setFillColor(sf::Color::Red);
+    }
+
+    // ======= State ======= //
 
     void update(double) override {}
 
     void render(sf::RenderWindow &window) override
     {
-        _text.setStyle(sf::Text::Bold);
-        _text.setFillColor(sf::Color::Red);
         window.draw(_text);
     }
 

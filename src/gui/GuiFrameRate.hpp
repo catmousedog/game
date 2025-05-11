@@ -9,32 +9,21 @@
 class GuiFrameRate : public GuiElement
 {
 
+    // ======= Construction ======= //
 public:
-    GuiFrameRate(const sf::Font &font) : _text(font, "frames")
-    {
-        _text.setStyle(sf::Text::Bold);
-        _text.setFillColor(sf::Color::Red);
-        _text.setCharacterSize(18);
-    }
+    GuiFrameRate(Configuration &config);
 
-    void update(double dt) override {}
+    // ======= State ======= //
 
-    void render(sf::RenderWindow &window) override
-    {
-        window.draw(_text);
-    }
+    void update(double dt) override;
 
-    void handleEvent(const sf::Event &) override {}
+    void render(sf::RenderWindow &window);
 
-    void setDt(double updateGoal, double renderGoal, const array<double, 3> &dt)
-    {
-        double SFML = dt[0];
-        double update = dt[1] / updateGoal * 100.;
-        double render = dt[2] / renderGoal * 100.;
-        string str = std::vformat("SFML:\t{:.2f}ms\nupdate:\t{:.2f}ms\t{:.1f}%\nrender:\t{:.2f}ms\t{:.1f}%",
-                                  std::make_format_args(updateGoal, renderGoal, SFML, update, render));
-        _text.setString(str);
-    }
+    void handleEvent(const sf::Event &) override;
+
+    // ======= Concrete ======= //
+
+    void setDt(double updateGoal, double renderGoal, const array<double, 3> &dt);
 
 private:
     sf::Text _text;

@@ -30,17 +30,21 @@ public:
 
     // ======= Getters ======= //
 public:
+    // convert relative pos to absolute pos
+    sf::Vector2f absPos(const sf::Vector2f &pos) const;
+
+    sf::Vector2f absPos(float x, float y) const;
+    
+
     // resources
     const sf::Font &font() const { return _font; }
 
     // settings
-    unsigned int windowWidth() const { return _windowWidth; }
-    unsigned int windowHeight() const { return _windowHeight; }
+    sf::Vector2u windowSize() const { return _windowSize; }
     unsigned int frameRate() const { return _frameRate; }
     unsigned int tickRate() const { return _tickRate; }
 
     // ======= Setters ======= //
-
 
     // ======= Variables ======= //
 private:
@@ -60,8 +64,7 @@ private:
     sf::Font _font;
 
     // loaded settings
-    unsigned int _windowWidth = 800;
-    unsigned int _windowHeight = 600;
+    sf::Vector2u _windowSize;
     unsigned int _frameRate = 30;
     unsigned int _tickRate = 20;
 };
