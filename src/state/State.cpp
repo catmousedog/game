@@ -46,7 +46,7 @@ ActionID State::getActionFromKeyBind(const KeyBind &keyBind) const
 
 ActionID State::getActionFromString(const string &actionString) const
 {
-    auto it = _actionMap.find(actionString);
+    auto it = _actionMap.find(StringUtils::toLower(actionString));
     if (it != _actionMap.end())
         return it->second;
 

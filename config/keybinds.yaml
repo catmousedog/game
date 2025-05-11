@@ -1,0 +1,7 @@
+MainMenu:
+  Exit:
+    keys: [ctrl+w, escape]
+
+Playing:
+  Sprint:
+    keys: a
