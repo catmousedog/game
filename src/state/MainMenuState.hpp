@@ -35,8 +35,14 @@ public:
 private:
     const ActionMap setupActionMap() const override;
 
+    // ======= Actions ======= //
+
+    void play();
+
+    void exit();
+
     // ======= Variables ======= //
-public:
+    
     GuiFrameRate _guiFrameRate;
     GuiButton _playButton;
     GuiButton _exitButton;

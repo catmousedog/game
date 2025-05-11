@@ -2,7 +2,7 @@
 #include "util/Error.hpp"
 #include "state/MainMenuState.hpp"
 
-Game::Game()
+Game::Game() : _stateManager(*this, _config)
 {
 }
 
@@ -18,7 +18,7 @@ void Game::setup()
     _window.setFramerateLimit(_config.frameRate());
 
     // states
-    _stateManager.pushState<MainMenuState>(*this, _config);
+    _stateManager.push<MainMenuState>();
 }
 
 void Game::run()

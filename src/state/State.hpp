@@ -18,7 +18,7 @@ constexpr ActionID ACTION_NONE = 0;
  * @brief Macro to define an action map entry. This is used to define the action map in the
  * setupActionMap() function.
  * @param ACTION The action to define.
- * @return The action map entry: 'STATE'.'ACTION' -> STATE::ACTION
+ * @return The action map entry: "ACTION" -> STATE::ACTION
  */
 #define ACTIONMAP_ENTRY(ACTION)                       \
     {                                                 \

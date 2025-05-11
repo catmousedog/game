@@ -1,7 +1,11 @@
 MainMenu:
   Exit:
-    keys: [ctrl+w, escape]
-
+    keys: [ctrl+w]
+    
 Playing:
-  Sprint:
-    keys: a
+  Menu:
+    keys: escape
+
+Menu:
+  Resume:
+    keys: escape

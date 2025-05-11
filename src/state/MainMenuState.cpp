@@ -15,12 +15,12 @@ MainMenuState::MainMenuState(Game &game, Configuration &config)
     _playButton.setText("Play", 30U);
     _playButton.setDimensions(config.absPos(0.5f, 0.5f), config.absPos(0.2f, 0.1f));
     _playButton.setOnPress([this]()
-                           { _game.replaceState<PlayingState>(); });
+                           { play(); });
 
     _exitButton.setText("Exit", 30U);
     _exitButton.setDimensions(config.absPos(0.5f, 0.6f), config.absPos(0.2f, 0.1f));
     _exitButton.setOnPress([this]()
-                           { _game.stop(); });
+                           { exit(); });
 }
 
 void MainMenuState::update(double dt)
@@ -44,7 +44,7 @@ void MainMenuState::handleAction(ActionID action)
     switch (action)
     {
     case Action::Exit:
-        _game.stop();
+        exit();
     default:
         break;
     }
@@ -62,4 +62,14 @@ const ActionMap MainMenuState::setupActionMap() const
         ACTIONMAP_ENTRY(None),
         ACTIONMAP_ENTRY(Exit),
     };
+}
+
+void MainMenuState::play()
+{
+    _game.stateManager().replace<PlayingState>();
+}
+
+void MainMenuState::exit()
+{
+    _game.stop();
 }

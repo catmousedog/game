@@ -55,7 +55,7 @@ void Configuration::loadKeyBinds(State &state) const
     {
         string actionName = actionNode.first.as<string>();
         const YAML::Node &keysNode = actionNode.second["keys"];
-        
+
         vector<string> keyStrings;
 
         if (keysNode)
@@ -76,6 +76,10 @@ void Configuration::loadKeyBinds(State &state) const
             if (!state.addKeyBind(keyBind, actionName))
             {
                 PRINT_ERROR("Failed to add keybind '{} -> {}'", keyStr, actionName);
+            }
+            else
+            {
+                PRINT_DEBUG("{}: Added keybind '{} -> {}'", currentState, keyStr, actionName);
             }
         }
     }

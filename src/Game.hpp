@@ -65,17 +65,9 @@ public:
 
     array<double, 3> getDt() const { return {_SFML_dt, _update_dt, _render_dt}; }
 
-    // ======= Setters ======= //
+    StateManager &stateManager() { return _stateManager; }
 
-    /**
-     * @brief Replaces the current state with a new state.
-     * @tparam T The type of the new state.
-     */
-    template <typename T>
-    void replaceState()
-    {
-        _stateManager.replace<T>(*this, _config);
-    }
+    // ======= Setters ======= //
 
 public:
     // ======= Variables ======= //
