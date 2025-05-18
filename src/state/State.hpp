@@ -5,50 +5,34 @@
 
 #include "../config/Configuration.hpp"
 #include "../util/Utils.hpp"
+#include "../config/KeyAction.hpp"
+#include "../util/Error.hpp"
 
 class Game;
 
-using ActionID = unsigned int;
-using ActionMap = std::unordered_map<string, ActionID>;
-using KeyMap = std::unordered_map<KeyBind, ActionID>;
-
-constexpr ActionID ACTION_NONE = 0;
-
-/**
- * @brief Macro to define an action map entry. This is used to define the action map in the
- * setupActionMap() function.
- * @param ACTION The action to define.
- * @return The action map entry: "ACTION" -> STATE::ACTION
- */
-#define ACTIONMAP_ENTRY(ACTION)                       \
-    {                                                 \
-        StringUtils::toLower(#ACTION), Action::ACTION \
-    }
+using KeyActionMap = std::unordered_map<string, std::unique_ptr<KeyAction>>;
+using KeyMap = std::unordered_map<KeyBind, KeyAction *>;
 
 class State
 {
-    // ======= Construction ======= //
+
+    // =============== Construction =============== //
+
 public:
     State(Game &game, Configuration &config);
 
     virtual ~State() = default;
 
-    // ======= Setup ======= //
+    // ================== Setup =================== //
 
     /**
-     * @brief Sets up the state. The default implementation loads the keybinds from the configuration.
+     * @brief Sets up the state. The derived function should fill the _actions map
+     * using addKeyAction() before calling State::setup().
      */
     virtual void setup();
 
-private:
-    /**
-     * @brief Sets up the action map. This should return a mapping of action strings to action IDs.
-     * The strings should point to the (untyped) Derived::Action enum, where Derived::Action::None
-     * =ACTION_NONE is the first element.
-     */
-    virtual const ActionMap setupActionMap() const = 0;
+    // ================== State =================== //
 
-    // ======= State ======= //
 public:
     /**
      * @brief Updates the state.
@@ -62,65 +46,63 @@ public:
      */
     virtual void render(sf::RenderWindow &window) = 0;
 
-    // ======= Events ======= //
+    // =============== SFML Events ================ //
 
     /**
-     * @brief Handles a sf::Event::KeyPressed event using the built in KeyMap.
-     * @param keyPressed The KeyPressed event.
-     */
-    void handleKeyPressed(const sf::Event::KeyPressed &keyPressed);
-
-    /**
-     * @brief Handles a certain Derived::Acton. This is called from the handleKeyPressed.
-     * @param action The action to handle.
-     */
-    virtual void handleAction(ActionID action) = 0;
-
-    /**
-     * @brief Handles a non-KeyPressed event.
-     * @param event the event which is not of type sf::Event::KeyPressed.
+     * @brief Handles a non sf::Event::KeyPressed event.
+     * @param event The sf::Event to handle.
      */
     virtual void handleEvent(const sf::Event &event) = 0;
 
     /**
-     * @brief Returns the State name used in the keybinds.
-     * @return The state name.
+     * @return The case-sensitive identifier of the state.
      */
     virtual string name() const = 0;
 
+    // ================= Keybinds ================= //
+
     /**
-     * @brief Adds a KeyBind to the KeyBind map. The map is to the Derived::Action enum using
-     * the action map defined in the setupActionMap().
-     * @return True if the keybind was added, false if it was already present or failed.
+     * @brief Handles an sf::Event::KeyPressed event, by calling the appropriate KeyAction.
+     * @param keyPressed The key pressed event.
+     */
+    void handleKeyPressed(const sf::Event::KeyPressed &keyPressed);
+
+    void handleKeyReleased(const sf::Event::KeyReleased &keyReleased);
+
+    /**
+     * @brief Adds a KeyBind->KeyAction to the keybind map of the state.
+     * This also checks if the action is valid, i.e. if it is in the _actions map.
+     * @param keybind The KeyBind to add.
+     * @param actionString The identifier of the KeyAction to bind to.
+     * @return True if the keybind was added, false otherwise.
      */
     bool addKeyBind(const KeyBind &keybind, const string &actionString);
 
-private:
-    /**
-     * @brief Returns the action ID for a certain keybind in the KeyBind mapping.
-     * @param keyPressed The keybind to check.
-     * @return The action ID, or ACTION_NONE if not found.
-     */
-    ActionID getActionFromKeyBind(const KeyBind &keyPressed) const;
-
-    /**
-     * @brief Private function used to convert the action string to an action ID using
-     * the action map defined in the setupActionMap().
-     * @param actionString The action string to convert.
-     * @return The action ID, or ACTION_NONE if not found.
-     */
-    ActionID getActionFromString(const string &actionString) const;
-
-    // ======= Getters ======= //
 protected:
-    Configuration &config() const { return _config; }
+    /**
+     * @brief Private helper function to add a KeyBind->KeyAction to the keybind
+     * map of the state. This should be called in the setup() of the derived class.
+     * @param actionString The identifier of the KeyAction to register.
+     * @param action The KeyAction to call when the action is triggered.
+     * @return True if the action was registered, false otherwise.
+     */
+    void addToggle(string actionString);
 
-    // ======= Variables ======= //
+    void addHold(string actionString);
+
+    void addPress(string actionString, std::function<void()> &&press);
+
+    KeyAction *getKeyAction(string actionString);
+
+    std::function<void()> &getPressAction(string actionString);
+
+    // ================ Variables ================= //
+
 protected:
     Game &_game;
+    Configuration &_config;
 
 private:
-    Configuration &_config;
     KeyMap _keyBinds;
-    ActionMap _actionMap;
+    KeyActionMap _actions;
 };

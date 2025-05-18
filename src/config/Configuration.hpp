@@ -8,9 +8,6 @@
 
 using Path = std::filesystem::path;
 
-#define CONFIGURATION_DIR "config/"
-#define RESOURCE_DIR "resources/"
-
 class State;
 
 class Configuration

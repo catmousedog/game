@@ -12,15 +12,24 @@ MainMenuState::MainMenuState(Game &game, Configuration &config)
       _playButton(config),
       _exitButton(config)
 {
+}
+
+void MainMenuState::setup()
+{
+    addPress("play", [this]()
+             { play(); });
+    addPress("exit", [this]()
+             { exit(); });
+
+    State::setup();
+
     _playButton.setText("Play", 30U);
-    _playButton.setDimensions(config.absPos(0.5f, 0.5f), config.absPos(0.2f, 0.1f));
-    _playButton.setOnPress([this]()
-                           { play(); });
+    _playButton.setDimensions(_config.absPos(0.5f, 0.5f), _config.absPos(0.2f, 0.1f));
+    _playButton.setOnPress(getPressAction("play"));
 
     _exitButton.setText("Exit", 30U);
-    _exitButton.setDimensions(config.absPos(0.5f, 0.6f), config.absPos(0.2f, 0.1f));
-    _exitButton.setOnPress([this]()
-                           { exit(); });
+    _exitButton.setDimensions(_config.absPos(0.5f, 0.6f), _config.absPos(0.2f, 0.1f));
+    _exitButton.setOnPress(getPressAction("exit"));
 }
 
 void MainMenuState::update(double dt)
@@ -39,34 +48,16 @@ void MainMenuState::render(sf::RenderWindow &window)
     _exitButton.render(window);
 }
 
-void MainMenuState::handleAction(ActionID action)
-{
-    switch (action)
-    {
-    case Action::Exit:
-        exit();
-    default:
-        break;
-    }
-}
-
 void MainMenuState::handleEvent(const sf::Event &event)
 {
     _playButton.handleEvent(event);
     _exitButton.handleEvent(event);
 }
 
-const ActionMap MainMenuState::setupActionMap() const
-{
-    return {
-        ACTIONMAP_ENTRY(None),
-        ACTIONMAP_ENTRY(Exit),
-    };
-}
-
 void MainMenuState::play()
 {
-    _game.stateManager().replace<PlayingState>();
+    _game.stateManager().pop<MainMenuState>();
+    _game.stateManager().push<PlayingState>();
 }
 
 void MainMenuState::exit()

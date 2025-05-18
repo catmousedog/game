@@ -19,6 +19,7 @@ void Game::setup()
 
     // states
     _stateManager.push<MainMenuState>();
+    _stateManager.performQueued();
 }
 
 void Game::run()
@@ -44,6 +45,9 @@ void Game::run()
         clock.restart();
         updateSFML();
         _SFML_dt = clock.getElapsedTime().asSeconds();
+
+        // Perform queued state changes
+        _stateManager.performQueued();
 
         // Update logic
         if (updateClock.getElapsedTime().asSeconds() > update_goal)
@@ -80,6 +84,10 @@ void Game::stop()
 void Game::updateSFML()
 {
     State *state = _stateManager.current();
+    if (!state)
+    {
+        PRINT_ERROR("NOT STATE FOUND!!!");
+    }
     while (const std::optional optional = _window.pollEvent())
     {
         auto event = optional.value();
@@ -108,7 +116,11 @@ void Game::render()
 {
     _window.clear();
     if (auto *state = _stateManager.current())
+    {
+        if (!state)
+            PRINT_ERROR("wtf???");
         state->render(_window);
+    }
 
     _window.display();
 }

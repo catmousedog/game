@@ -1,48 +1,38 @@
 #pragma once
 
 #include "State.hpp"
-#include "../gui/GuiFrameRate.hpp"
 #include "../gui/GuiButton.hpp"
 
 class MenuState : public State
 {
-    // ======= Action Enum ======= //
-private:
-    enum Action
-    {
-        None = ACTION_NONE,
-        Resume
-    };
+    // =============== Construction =============== //
 
-    // ======= Construction ======= //
 public:
     MenuState(Game &game, Configuration &config);
 
-    // ======= State ======= //
+    void setup() override;
+
+    // ================== State =================== //
 
     void update(double dt) override;
 
     void render(sf::RenderWindow &window) override;
 
-    // ======= Event ======= //
-
-    void handleAction(ActionID action) override;
+    // =============== SFML Events ================ //
 
     void handleEvent(const sf::Event &event) override;
 
-    string name() const override { return "Menu"; }
+    string name() const override { return "Menu"; };
 
-private:
-    const ActionMap setupActionMap() const override;
-
-    // ======= Actions ======= //
+    // ================= Actions ================== //
 
     void resume();
 
-    void menu();
+    void exitToMainMenu();
 
-    // ======= Variables ======= //
-public:
+    // ================ Variables ================= //
+
+private:
     GuiButton _resumeButton;
     GuiButton _exitToMainMenuButton;
 };

@@ -1,4 +1,5 @@
 #include "GuiFrameRate.hpp"
+#include "../util/Error.hpp"
 
 GuiFrameRate::GuiFrameRate(Configuration &config)
     : GuiElement(config),

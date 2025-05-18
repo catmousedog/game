@@ -2,6 +2,7 @@ MainMenu:
   Exit:
     keys: [ctrl+w]
     
+
 Playing:
   Menu:
     keys: escape

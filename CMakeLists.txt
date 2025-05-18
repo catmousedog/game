@@ -10,3 +10,7 @@ file(GLOB_RECURSE SOURCES src/*.cpp)
 
 add_executable(game ${SOURCES})
 target_link_libraries(game PRIVATE sfml-graphics sfml-window sfml-system yaml-cpp)
+
+# Enable AddressSanitizer
+target_compile_options(game PRIVATE -g -fsanitize=address -fno-omit-frame-pointer)
+target_link_options(game PRIVATE -fsanitize=address)

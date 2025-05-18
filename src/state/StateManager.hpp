@@ -2,6 +2,7 @@
 
 #include <stack>
 #include <memory>
+#include <queue>
 
 #include "State.hpp"
 
@@ -13,47 +14,39 @@ public:
         : _game(game), _config(config) {}
 
     /**
-     * @brief Pushes a new state onto the stack.
-     * @tparam T The type of the state to push.
+     * @brief Queues a state to be pushed onto the stack.
+     * @tparam T The type of state to push.
      */
     template <typename T>
     void push()
     {
-        auto state = std::make_unique<T>(_game, _config);
-        state->setup();
-        push(std::move(state));
+        _pending.push([this]()
+                      { pushState<T>(); });
     }
 
     /**
-     * @brief Pops the current state from the stack.
+     * @brief Queues a state to be popped from the stack.
+     * If the top state is not of type T, it will not be popped.
+     * @tparam T The type of state to pop.
      */
+    template <typename T>
     void pop()
     {
-        if (!_states.empty())
-            _states.pop();
+        _pending.push([this]()
+                      { popState<T>(); });
     }
 
     /**
-     * @brief Replaces the current state with a new state.
-     * @tparam T The type of the state to push.
+     * @brief Performs all queued state changes.
      */
-    template <typename T>
-    void replace()
+    void performQueued()
     {
-        pop();
-        push<T>();
-    }
-
-    /**
-     * @brief Removes all states and pushes a new state.
-     * @tparam T The type of the state to push.
-     */
-    template <typename T>
-    void set()
-    {
-        while (!_states.empty())
-            _states.pop();
-        push<T>();
+        while (!_pending.empty())
+        {
+            auto action = std::move(_pending.front());
+            _pending.pop();
+            action();
+        }
     }
 
     /**
@@ -74,12 +67,26 @@ public:
     }
 
 private:
-    void push(std::unique_ptr<State> state)
+    template <typename T>
+    void pushState()
     {
+        auto state = std::make_unique<T>(_game, _config);
+        state->setup();
         _states.push(std::move(state));
     }
 
+    template <typename T>
+    void popState()
+    {
+        if (!_states.empty())
+        {
+            if (dynamic_cast<T *>(_states.top().get()))
+                _states.pop();
+        }
+    }
+
     std::stack<std::unique_ptr<State>> _states;
+    std::queue<std::function<void()>> _pending;
     Game &_game;
     Configuration &_config;
 };

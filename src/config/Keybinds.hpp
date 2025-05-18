@@ -6,6 +6,7 @@
 
 using Key = sf::Keyboard::Key;
 using KeyPressed = sf::Event::KeyPressed;
+using KeyReleased = sf::Event::KeyReleased;
 
 /**
  * Description of a certain keybind based on the sf::Event::KeyPressed
@@ -20,6 +21,8 @@ struct KeyBind
     KeyBind() = default;
 
     KeyBind(const KeyPressed &key) : code(key.code), alt(key.alt), control(key.control), shift(key.shift) {}
+
+    KeyBind(const KeyReleased &key) : code(key.code), alt(key.alt), control(key.control), shift(key.shift) {}
 
     bool operator==(const KeyBind &other) const = default;
 };
@@ -43,4 +46,4 @@ namespace std
 
 KeyBind parseKeybind(string keyString);
 
-std::pair<string, string> parseAction(const string& whenActionString);
+std::pair<string, string> parseAction(const string &whenActionString);

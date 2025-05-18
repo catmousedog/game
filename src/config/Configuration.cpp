@@ -5,6 +5,13 @@
 #include "../util/Utils.hpp"
 #include "../state/State.hpp"
 
+namespace
+{
+    constexpr string CONFIGURATION_DIR = "config/";
+    constexpr string RESOURCE_DIR = "resources/";
+
+}
+
 Configuration::Configuration()
 {
     _configDir = CONFIGURATION_DIR;
@@ -57,7 +64,6 @@ void Configuration::loadKeyBinds(State &state) const
         const YAML::Node &keysNode = actionNode.second["keys"];
 
         vector<string> keyStrings;
-
         if (keysNode)
         {
             if (keysNode.IsSequence())
@@ -79,7 +85,7 @@ void Configuration::loadKeyBinds(State &state) const
             }
             else
             {
-                PRINT_DEBUG("{}: Added keybind '{} -> {}'", currentState, keyStr, actionName);
+                // PRINT_DEBUG("{}: Added keybind '{} -> {}'", currentState, keyStr, actionName);
             }
         }
     }

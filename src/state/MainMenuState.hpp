@@ -6,43 +6,34 @@
 
 class MainMenuState : public State
 {
-    // ======= Action Enum ======= //
-private:
-    enum Action
-    {
-        None = ACTION_NONE,
-        Exit,
-    };
+    // =============== Construction =============== //
 
-    // ======= Construction ======= //
 public:
     MainMenuState(Game &game, Configuration &config);
 
-    // ======= State ======= //
+    void setup() override;
+
+    // ================== State =================== //
 
     void update(double dt) override;
 
     void render(sf::RenderWindow &window) override;
 
-    // ======= Event ======= //
-
-    void handleAction(ActionID action) override;
+    // =============== SFML Events ================ //
 
     void handleEvent(const sf::Event &event) override;
 
-    string name() const override { return "MainMenu"; }
+    string name() const override { return "MainMenu"; };
 
-private:
-    const ActionMap setupActionMap() const override;
-
-    // ======= Actions ======= //
+    // ================= Actions ================== //
 
     void play();
 
     void exit();
 
-    // ======= Variables ======= //
-    
+    // ================ Variables ================= //
+
+private:
     GuiFrameRate _guiFrameRate;
     GuiButton _playButton;
     GuiButton _exitButton;

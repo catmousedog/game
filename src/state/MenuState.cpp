@@ -2,6 +2,7 @@
 #include <SFML/System/InputStream.hpp>
 
 #include "MenuState.hpp"
+#include "PlayingState.hpp"
 #include "MainMenuState.hpp"
 #include "../Game.hpp"
 #include "../util/Error.hpp"
@@ -11,15 +12,22 @@ MenuState::MenuState(Game &game, Configuration &config)
       _resumeButton(config),
       _exitToMainMenuButton(config)
 {
+}
+
+void MenuState::setup()
+{
+    addPress("resume", [this]()
+             { this->resume(); });
+
+    State::setup();
+
     _resumeButton.setText("Resume", 30U);
-    _resumeButton.setDimensions(config.absPos(0.5f, 0.4f), config.absPos(0.2f, 0.1f));
-    _resumeButton.setOnPress([this]()
-                             { resume(); });
+    _resumeButton.setDimensions(_config.absPos(0.5f, 0.4f), _config.absPos(0.2f, 0.1f));
+    _resumeButton.setOnPress(getPressAction("resume"));
 
     _exitToMainMenuButton.setText("Exit to Main Menu", 30U);
-    _exitToMainMenuButton.setDimensions(config.absPos(0.5f, 0.6f), config.absPos(0.3f, 0.1f));
-    _exitToMainMenuButton.setOnPress([this]()
-                                     { menu(); });
+    _exitToMainMenuButton.setDimensions(_config.absPos(0.5f, 0.6f), _config.absPos(0.3f, 0.1f));
+    _exitToMainMenuButton.setOnPress(std::bind(&MenuState::exitToMainMenu, this));
 }
 
 void MenuState::update(double dt)
@@ -34,38 +42,20 @@ void MenuState::render(sf::RenderWindow &window)
     _exitToMainMenuButton.render(window);
 }
 
-void MenuState::handleAction(ActionID action)
-{
-    switch (action)
-    {
-    case Resume:
-        _game.stateManager().pop();
-        break;
-    default:
-        break;
-    }
-}
-
 void MenuState::handleEvent(const sf::Event &event)
 {
     _resumeButton.handleEvent(event);
     _exitToMainMenuButton.handleEvent(event);
 }
 
-const ActionMap MenuState::setupActionMap() const
-{
-    return {
-        ACTIONMAP_ENTRY(None),
-        ACTIONMAP_ENTRY(Resume),
-    };
-}
-
 void MenuState::resume()
 {
-    _game.stateManager().pop();
+    _game.stateManager().pop<MenuState>();
 }
 
-void MenuState::menu()
+void MenuState::exitToMainMenu()
 {
-    _game.stateManager().set<MainMenuState>();
+    _game.stateManager().pop<MenuState>();
+    _game.stateManager().pop<PlayingState>();
+    _game.stateManager().push<MainMenuState>();
 }

@@ -1,43 +1,35 @@
 #pragma once
 
 #include "State.hpp"
-
 #include "../gui/GuiFrameRate.hpp"
 
 class PlayingState : public State
 {
-    // ======= Action Enum ======= //
-private:
-    enum Action
-    {
-        None = ACTION_NONE,
-        Menu,
-    };
+    // =============== Construction =============== //
 
-    // ======= Construction ======= //
 public:
     PlayingState(Game &game, Configuration &config);
 
-    // ======= State ======= //
-
     void setup() override;
+
+    // ================== State =================== //
 
     void update(double dt) override;
 
     void render(sf::RenderWindow &window) override;
 
-    // ======= Keybinds ======= //
-
-    void handleAction(ActionID action) override;
+    // =============== SFML Events ================ //
 
     void handleEvent(const sf::Event &event) override;
 
-    string name() const override { return "Playing"; }
+    string name() const override { return "Playing"; };
+
+    // ================= Actions ================== //
+
+    void menu();
+
+    // ================ Variables ================= //
 
 private:
-    const ActionMap setupActionMap() const override;
-
-    // ======= Variables ======= //
-
     GuiFrameRate _guiFrameRate;
 };

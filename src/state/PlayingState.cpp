@@ -11,6 +11,9 @@ PlayingState::PlayingState(Game &game, Configuration &config)
 
 void PlayingState::setup()
 {
+    addPress("menu", [this]()
+             { menu(); });
+
     State::setup();
 }
 
@@ -26,26 +29,11 @@ void PlayingState::render(sf::RenderWindow &window)
     _guiFrameRate.render(window);
 }
 
-void PlayingState::handleAction(ActionID action)
-{
-    switch (action)
-    {
-    case Menu:
-        _game.stateManager().push<MenuState>();
-        break;
-    default:
-        break;
-    }
-}
-
 void PlayingState::handleEvent(const sf::Event &event)
 {
 }
 
-const ActionMap PlayingState::setupActionMap() const
+void PlayingState::menu()
 {
-    return {
-        ACTIONMAP_ENTRY(None),
-        ACTIONMAP_ENTRY(Menu),
-    };
+    _game.stateManager().push<MenuState>();
 }
