@@ -9,7 +9,7 @@ class MainMenuState : public State
     // =============== Construction =============== //
 
 public:
-    MainMenuState(Game &game, Configuration &config);
+    MainMenuState(Game &game);
 
     void setup() override;
 

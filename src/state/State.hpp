@@ -1,17 +1,20 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+
 #include <unordered_map>
+#include <memory>
 
-#include "../config/Configuration.hpp"
-#include "../util/Utils.hpp"
 #include "../config/KeyAction.hpp"
-#include "../util/Error.hpp"
-
-class Game;
+#include "../config/Keybinds.hpp"
 
 using KeyActionMap = std::unordered_map<string, std::unique_ptr<KeyAction>>;
 using KeyMap = std::unordered_map<KeyBind, KeyAction *>;
+
+class Game;
+class Configuration;
+class Resources;
 
 class State
 {
@@ -19,7 +22,7 @@ class State
     // =============== Construction =============== //
 
 public:
-    State(Game &game, Configuration &config);
+    State(Game &game);
 
     virtual ~State() = default;
 
@@ -100,7 +103,6 @@ protected:
 
 protected:
     Game &_game;
-    Configuration &_config;
 
 private:
     KeyMap _keyBinds;

@@ -1,4 +1,5 @@
 #include <regex>
+#include <unordered_map>
 
 #include "Keybinds.hpp"
 #include "../util/Utils.hpp"

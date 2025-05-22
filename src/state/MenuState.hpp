@@ -8,7 +8,7 @@ class MenuState : public State
     // =============== Construction =============== //
 
 public:
-    MenuState(Game &game, Configuration &config);
+    MenuState(Game &game);
 
     void setup() override;
 

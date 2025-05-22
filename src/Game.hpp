@@ -1,6 +1,7 @@
 #pragma once
 
 #include "config/Configuration.hpp"
+#include "resources/Resources.hpp"
 #include "state/StateManager.hpp"
 
 class Game
@@ -67,12 +68,17 @@ public:
 
     StateManager &stateManager() { return _stateManager; }
 
+    Configuration& config() { return _config; }
+
+    Resources& resources() { return _resources; }
+
     // ======= Setters ======= //
 
 public:
     // ======= Variables ======= //
 private:
     Configuration _config;
+    Resources _resources;
     StateManager _stateManager;
 
     // SFML

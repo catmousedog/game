@@ -8,8 +8,6 @@
 namespace
 {
     constexpr string CONFIGURATION_DIR = "config/";
-    constexpr string RESOURCE_DIR = "resources/";
-
 }
 
 Configuration::Configuration()
@@ -27,23 +25,17 @@ Configuration::Configuration()
     {
         PRINT_ERROR("Could not load settings or keybinds YAML: {}", e.what());
     }
-
-    _resourceDir = RESOURCE_DIR;
-    _fontPath = _resourceDir / "fonts/FreeMono.ttf";
-
-    if (!_font.openFromFile(_fontPath))
-        PRINT_ERROR("Failed to load font: {}", _fontPath.string());
 }
 
 void Configuration::loadSettings()
 {
     try
     {
-        unsigned int width = _settingsYAML["windowWidth"].as<unsigned int>();
-        unsigned int height = _settingsYAML["windowHeight"].as<unsigned int>();
-        _frameRate = _settingsYAML["frameRate"].as<unsigned int>();
-        _tickRate = _settingsYAML["tickRate"].as<unsigned int>();
-        _windowSize = sf::Vector2u(width, height);
+        uint width = _settingsYAML["windowWidth"].as<uint>();
+        uint height = _settingsYAML["windowHeight"].as<uint>();
+        _frameRate = _settingsYAML["frameRate"].as<uint>();
+        _tickRate = _settingsYAML["tickRate"].as<uint>();
+        _windowSize = sf::Vector2i(width, height);
     }
     catch (const YAML::Exception &e)
     {
@@ -53,12 +45,10 @@ void Configuration::loadSettings()
 
 void Configuration::loadKeyBinds(State &state) const
 {
-    string currentState = state.name();
-
-    if (!_keyBindsYAML[currentState])
+    if (!_keyBindsYAML[state.name()])
         return;
 
-    for (const auto &actionNode : _keyBindsYAML[currentState])
+    for (const auto &actionNode : _keyBindsYAML[state.name()])
     {
         string actionName = actionNode.first.as<string>();
         const YAML::Node &keysNode = actionNode.second["keys"];
@@ -82,10 +72,6 @@ void Configuration::loadKeyBinds(State &state) const
             if (!state.addKeyBind(keyBind, actionName))
             {
                 PRINT_ERROR("Failed to add keybind '{} -> {}'", keyStr, actionName);
-            }
-            else
-            {
-                // PRINT_DEBUG("{}: Added keybind '{} -> {}'", currentState, keyStr, actionName);
             }
         }
     }

@@ -1,9 +1,8 @@
 #include "GuiFrameRate.hpp"
 #include "../util/Error.hpp"
 
-GuiFrameRate::GuiFrameRate(Configuration &config)
-    : GuiElement(config),
-      _text(config.font(), "frames")
+GuiFrameRate::GuiFrameRate(const sf::Font &font)
+    : _text(font, "frames")
 {
     _text.setStyle(sf::Text::Bold);
     _text.setFillColor(sf::Color::Red);

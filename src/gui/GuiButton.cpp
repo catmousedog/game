@@ -9,11 +9,11 @@ constexpr auto IDLE_COLOR = sf::Color(100, 100, 150);
 constexpr auto HOVER_COLOR = sf::Color(125, 125, 200);
 constexpr auto PRESSED_COLOR = sf::Color(125, 200, 200);
 
-GuiButton::GuiButton(Configuration &config) : GuiElement(config), _text(config.font()), _shape()
+GuiButton::GuiButton(const sf::Font &font) : _text(font), _shape()
 {
 }
 
-void GuiButton::setText(const std::string &text, unsigned int char_size)
+void GuiButton::setText(const std::string &text, uint char_size)
 {
     _text.setString(text);
     _text.setCharacterSize(char_size);

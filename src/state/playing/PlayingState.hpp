@@ -1,14 +1,17 @@
 #pragma once
 
-#include "State.hpp"
-#include "../gui/GuiFrameRate.hpp"
+#include <SFML/Graphics/View.hpp>
+
+#include "../State.hpp"
+#include "../../gui/GuiFrameRate.hpp"
+#include "Grid.hpp"
 
 class PlayingState : public State
 {
     // =============== Construction =============== //
 
 public:
-    PlayingState(Game &game, Configuration &config);
+    PlayingState(Game &game);
 
     void setup() override;
 
@@ -28,8 +31,13 @@ public:
 
     void menu();
 
+    void exit();
+
     // ================ Variables ================= //
 
 private:
     GuiFrameRate _guiFrameRate;
+    Grid _grid;
+
+    sf::View _view;
 };

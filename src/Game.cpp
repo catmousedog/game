@@ -2,7 +2,7 @@
 #include "util/Error.hpp"
 #include "state/MainMenuState.hpp"
 
-Game::Game() : _stateManager(*this, _config)
+Game::Game() : _stateManager(*this)
 {
 }
 
@@ -12,10 +12,14 @@ Game::~Game()
 
 void Game::setup()
 {
-    // settings
+    // config
     _config.loadSettings();
-    _window = sf::RenderWindow(sf::VideoMode(_config.windowSize()), "game");
+    _window = sf::RenderWindow(sf::VideoMode(static_cast<sf::Vector2u>(_config.windowSize())), "game");
     _window.setFramerateLimit(_config.frameRate());
+
+    // resources
+    _resources.loadTextures();
+    _resources.loadFonts();
 
     // states
     _stateManager.push<MainMenuState>();
@@ -49,6 +53,12 @@ void Game::run()
         // Perform queued state changes
         _stateManager.performQueued();
 
+        if (!_stateManager.current())
+        {
+            PRINT_ERROR("No current state. Exiting game.");
+            break;
+        }
+
         // Update logic
         if (updateClock.getElapsedTime().asSeconds() > update_goal)
         {
@@ -72,7 +82,6 @@ void Game::run()
         }
     }
 
-    PRINT_DEBUG("Game loop ended");
     _window.close();
 }
 
@@ -84,10 +93,6 @@ void Game::stop()
 void Game::updateSFML()
 {
     State *state = _stateManager.current();
-    if (!state)
-    {
-        PRINT_ERROR("NOT STATE FOUND!!!");
-    }
     while (const std::optional optional = _window.pollEvent())
     {
         auto event = optional.value();
@@ -116,11 +121,7 @@ void Game::render()
 {
     _window.clear();
     if (auto *state = _stateManager.current())
-    {
-        if (!state)
-            PRINT_ERROR("wtf???");
         state->render(_window);
-    }
 
     _window.display();
 }

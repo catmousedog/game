@@ -22,9 +22,9 @@ private:
 
     // ======= Construction ======= //
 public:
-    GuiButton(Configuration &config);
+    GuiButton(const sf::Font& font);
 
-    void setText(const std::string &text, unsigned int char_size = 30U);
+    void setText(const std::string &text, uint char_size = 30U);
 
     void setDimensions(const sf::Vector2f &position, const sf::Vector2f &size);
 

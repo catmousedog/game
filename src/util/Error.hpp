@@ -44,3 +44,5 @@ inline void print_debug(std::string fmt, Args... args) {
               << formatted_message << "\n"
               << reset_color;
 }
+
+// add simple print with just Args and no fmt

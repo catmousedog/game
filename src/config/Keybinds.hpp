@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Event.hpp>
 
 #include "../util/Basic.hpp"
 

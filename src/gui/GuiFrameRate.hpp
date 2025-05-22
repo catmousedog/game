@@ -11,7 +11,7 @@ class GuiFrameRate : public GuiElement
 
     // ======= Construction ======= //
 public:
-    GuiFrameRate(Configuration &config);
+    GuiFrameRate(const sf::Font& font);
 
     // ======= State ======= //
 

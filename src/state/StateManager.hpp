@@ -3,15 +3,17 @@
 #include <stack>
 #include <memory>
 #include <queue>
+#include <functional>
 
 #include "State.hpp"
+
+class Game;
 
 class StateManager
 {
 
 public:
-    StateManager(Game &game, Configuration &config)
-        : _game(game), _config(config) {}
+    StateManager(Game &game) : _game(game) {}
 
     /**
      * @brief Queues a state to be pushed onto the stack.
@@ -20,8 +22,7 @@ public:
     template <typename T>
     void push()
     {
-        _pending.push([this]()
-                      { pushState<T>(); });
+        _pending.push(std::bind(&StateManager::pushState<T>, this));
     }
 
     /**
@@ -32,8 +33,7 @@ public:
     template <typename T>
     void pop()
     {
-        _pending.push([this]()
-                      { popState<T>(); });
+        _pending.push(std::bind(&StateManager::popState<T>, this));
     }
 
     /**
@@ -70,7 +70,7 @@ private:
     template <typename T>
     void pushState()
     {
-        auto state = std::make_unique<T>(_game, _config);
+        auto state = std::make_unique<T>(_game);
         state->setup();
         _states.push(std::move(state));
     }
@@ -88,5 +88,4 @@ private:
     std::stack<std::unique_ptr<State>> _states;
     std::queue<std::function<void()>> _pending;
     Game &_game;
-    Configuration &_config;
 };

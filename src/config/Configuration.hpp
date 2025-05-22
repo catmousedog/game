@@ -1,8 +1,10 @@
 #pragma once
 
-#include <filesystem>
-#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics.hpp>
+
 #include <yaml-cpp/yaml.h>
+
+#include <filesystem>
 
 #include "Keybinds.hpp"
 
@@ -12,20 +14,27 @@ class State;
 
 class Configuration
 {
+
+    // =============== Construction =============== //
 public:
     Configuration();
 
     void loadSettings();
     void loadKeyBinds(State &state) const;
 
-    // Getters
-    sf::Vector2f absPos(const sf::Vector2f &pos) const;
-    sf::Vector2f absPos(float x, float y) const;
+    // ================= Getters ================== //
 
-    const sf::Font &font() const { return _font; }
-    sf::Vector2u windowSize() const { return _windowSize; }
-    unsigned int frameRate() const { return _frameRate; }
-    unsigned int tickRate() const { return _tickRate; }
+    sf::Vector2f absPos(const sf::Vector2f &pos) const;
+
+    sf::Vector2f absPos(float relX, float relY) const;
+
+    sf::Vector2i windowSize() const { return _windowSize; }
+
+    uint frameRate() const { return _frameRate; }
+
+    uint tickRate() const { return _tickRate; }
+
+    // ================ Variables ================= //
 
 private:
     // paths
@@ -40,11 +49,8 @@ private:
     YAML::Node _settingsYAML;
     YAML::Node _keyBindsYAML;
 
-    // resources
-    sf::Font _font;
-
     // cached values
-    sf::Vector2u _windowSize;
-    unsigned int _frameRate = 30;
-    unsigned int _tickRate = 20;
+    sf::Vector2i _windowSize;
+    uint _frameRate = 30;
+    uint _tickRate = 20;
 };

@@ -6,6 +6,8 @@ MainMenu:
 Playing:
   Menu:
     keys: escape
+  Exit:
+    keys: [ctrl+w]
 
 Menu:
   Resume:

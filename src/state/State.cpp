@@ -1,10 +1,14 @@
 #include "State.hpp"
 
-State::State(Game &game, Configuration &config) : _game(game), _config(config) {}
+#include "../Game.hpp"
+#include "../util/Utils.hpp"
+#include "../util/Error.hpp"
+
+State::State(Game &game) : _game(game) {}
 
 void State::setup()
 {
-    _config.loadKeyBinds(*this);
+    _game.config().loadKeyBinds(*this);
 }
 
 void State::handleKeyPressed(const sf::Event::KeyPressed &keyPressed)

@@ -9,10 +9,11 @@ class GuiText : public GuiElement
 
     // ======= Construction ======= //
 public:
-    GuiText(const sf::Font &font,
+    GuiText(Configuration &config,
             const std::string &text,
-            unsigned int char_size = 30U)
-        : _text(font, text, char_size)
+            uint char_size = 30U)
+        : GuiElement(config),
+          _text(config.font(), text, char_size)
     {
         _text.setStyle(sf::Text::Bold);
         _text.setFillColor(sf::Color::Red);
