@@ -36,7 +36,7 @@ public:
 
     void render(sf::RenderWindow &window) override;
 
-    void handleEvent(const sf::Event &event) override;
+    void handleEvent(const sf::RenderWindow& window, const sf::Event &event) override;
 
 private:
     std::function<void()> _onPress;

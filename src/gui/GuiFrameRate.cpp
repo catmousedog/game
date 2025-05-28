@@ -16,7 +16,7 @@ void GuiFrameRate::render(sf::RenderWindow &window)
     window.draw(_text);
 }
 
-void GuiFrameRate::handleEvent(const sf::Event &) {}
+void GuiFrameRate::handleEvent(const sf::RenderWindow& window, const sf::Event &) {}
 
 void GuiFrameRate::setDt(double updateGoal, double renderGoal, const array<double, 3> &dt)
 {

@@ -55,7 +55,7 @@ public:
      * @brief Handles a non sf::Event::KeyPressed event.
      * @param event The sf::Event to handle.
      */
-    virtual void handleEvent(const sf::Event &event) = 0;
+    virtual void handleEvent(const sf::RenderWindow& window, const sf::Event &event) = 0;
 
     /**
      * @return The case-sensitive identifier of the state.

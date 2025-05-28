@@ -44,10 +44,10 @@ void MenuState::render(sf::RenderWindow &window)
     _exitToMainMenuButton.render(window);
 }
 
-void MenuState::handleEvent(const sf::Event &event)
+void MenuState::handleEvent(const sf::RenderWindow& window, const sf::Event &event)
 {
-    _resumeButton.handleEvent(event);
-    _exitToMainMenuButton.handleEvent(event);
+    _resumeButton.handleEvent(window, event);
+    _exitToMainMenuButton.handleEvent(window, event);
 }
 
 void MenuState::resume()

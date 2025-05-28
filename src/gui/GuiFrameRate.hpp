@@ -19,7 +19,7 @@ public:
 
     void render(sf::RenderWindow &window);
 
-    void handleEvent(const sf::Event &) override;
+    void handleEvent(const sf::RenderWindow& window, const sf::Event &event) override;
 
     // ======= Concrete ======= //
 

@@ -2,6 +2,8 @@
 #include "util/Error.hpp"
 #include "state/MainMenuState.hpp"
 
+// =============== Construction =============== //
+
 Game::Game() : _stateManager(*this)
 {
 }
@@ -25,6 +27,8 @@ void Game::setup()
     _stateManager.push<MainMenuState>();
     _stateManager.performQueued();
 }
+
+// ================== State =================== //
 
 void Game::run()
 {
@@ -106,7 +110,7 @@ void Game::updateSFML()
         }
         else
         {
-            state->handleEvent(event);
+            state->handleEvent(_window, event);
         }
     }
 }

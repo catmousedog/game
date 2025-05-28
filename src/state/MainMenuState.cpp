@@ -50,10 +50,10 @@ void MainMenuState::render(sf::RenderWindow &window)
     _exitButton.render(window);
 }
 
-void MainMenuState::handleEvent(const sf::Event &event)
+void MainMenuState::handleEvent(const sf::RenderWindow& window, const sf::Event &event)
 {
-    _playButton.handleEvent(event);
-    _exitButton.handleEvent(event);
+    _playButton.handleEvent(window, event);
+    _exitButton.handleEvent(window, event);
 }
 
 void MainMenuState::play()

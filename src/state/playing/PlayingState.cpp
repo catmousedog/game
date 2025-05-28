@@ -19,8 +19,7 @@ void PlayingState::setup()
 
     State::setup();
 
-    _view.setCenter({100, 100});
-    _view.setSize({200, 200});
+    _cameraView.initView(_game.config().windowSize());
 }
 
 // ================== State =================== //
@@ -34,16 +33,20 @@ void PlayingState::update(double dt)
 
 void PlayingState::render(sf::RenderWindow &window)
 {
-    window.setView(_view);
-    
+    _cameraView.setView(window);
+
     _grid.render(window);
+
+    // UI
+    window.setView(window.getDefaultView());
     _guiFrameRate.render(window);
 }
 
 // =============== SFML Events ================ //
 
-void PlayingState::handleEvent(const sf::Event &event)
+void PlayingState::handleEvent(const sf::RenderWindow& window, const sf::Event &event)
 {
+    _cameraView.handleEvent(window, event);
 }
 
 // ================= Actions ================== //

@@ -20,7 +20,7 @@ public:
 
     // =============== SFML Events ================ //
 
-    void handleEvent(const sf::Event &event) override;
+    void handleEvent(const sf::RenderWindow& window, const sf::Event &event) override;
 
     string name() const override { return "Menu"; };
 

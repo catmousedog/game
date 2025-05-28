@@ -21,5 +21,5 @@ public:
 
     virtual void render(sf::RenderWindow &window) = 0;
 
-    virtual void handleEvent(const sf::Event &event) = 0;
+    virtual void handleEvent(const sf::RenderWindow& window, const sf::Event &event) = 0;
 };

@@ -56,7 +56,7 @@ void GuiButton::render(sf::RenderWindow &window)
     window.draw(_text);
 }
 
-void GuiButton::handleEvent(const sf::Event &event)
+void GuiButton::handleEvent(const sf::RenderWindow& window, const sf::Event &event)
 {
     if (event.is<sf::Event::MouseMoved>() && _buttonState != ButtonState::PRESSED)
     {

@@ -6,8 +6,8 @@
 
 class Game
 {
+    // =============== Construction =============== //
 
-    // ======= Construction ======= //
 public:
     /**
      * @brief Constructor for the Game class.
@@ -19,7 +19,8 @@ public:
      */
     ~Game();
 
-    // ======= State ======= //
+    // ================== State =================== //
+
     /**
      * @brief Sets up the game.
      */
@@ -50,7 +51,8 @@ public:
      */
     void render();
 
-    // ======= Getters ======= //
+    // ================= Getters ================== //
+
 public:
     /**
      * @brief Calculates the desired time (s) between update ticks.
@@ -72,10 +74,8 @@ public:
 
     Resources& resources() { return _resources; }
 
-    // ======= Setters ======= //
+    // ================ Variables ================= //
 
-public:
-    // ======= Variables ======= //
 private:
     Configuration _config;
     Resources _resources;
