@@ -30,9 +30,13 @@ public:
 
     sf::Vector2i windowSize() const { return _windowSize; }
 
+    float windowRatio() const { return static_cast<float>(_windowSize.x) / _windowSize.y; }
+
     uint frameRate() const { return _frameRate; }
 
     uint tickRate() const { return _tickRate; }
+
+    bool zoomToMouse() const { return _zoomToMouse; }
 
     // ================ Variables ================= //
 
@@ -53,4 +57,5 @@ private:
     sf::Vector2i _windowSize;
     uint _frameRate = 30;
     uint _tickRate = 20;
+    bool _zoomToMouse = false;
 };

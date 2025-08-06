@@ -92,6 +92,4 @@ private:
     double _SFML_dt;
     double _update_dt;
     double _render_dt;
-
-    double test;
 };

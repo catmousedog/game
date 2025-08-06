@@ -16,7 +16,7 @@ void Game::setup()
 {
     // config
     _config.loadSettings();
-    _window = sf::RenderWindow(sf::VideoMode(static_cast<sf::Vector2u>(_config.windowSize())), "game");
+    _window = sf::RenderWindow(sf::VideoMode(toVec2u(_config.windowSize())), "game");
     _window.setFramerateLimit(_config.frameRate());
 
     // resources

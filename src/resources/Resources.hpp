@@ -7,6 +7,8 @@
 
 using Path = std::filesystem::path;
 
+// ================ Constants ================= //
+
 namespace
 {
     constexpr string RESOURCE_DIR = "resources/";

@@ -19,7 +19,12 @@ void PlayingState::setup()
 
     State::setup();
 
-    _cameraView.initView(_game.config().windowSize());
+    sf::Vector2f gridSize = toVec2f(_grid.gridSize());
+    sf::Vector2f cellSize = Grid::Cell::SIZE;
+    sf::Vector2f gridWorldSize = gridSize.componentWiseMul(cellSize);
+    sf::Vector2f center(gridWorldSize / 2.f);
+    sf::Vector2f size(gridWorldSize.x * _game.config().windowRatio(), gridWorldSize.y);
+    _cameraView.setup(center, size, _game.config().zoomToMouse());
 }
 
 // ================== State =================== //
@@ -44,7 +49,7 @@ void PlayingState::render(sf::RenderWindow &window)
 
 // =============== SFML Events ================ //
 
-void PlayingState::handleEvent(const sf::RenderWindow& window, const sf::Event &event)
+void PlayingState::handleEvent(const sf::RenderWindow &window, const sf::Event &event)
 {
     _cameraView.handleEvent(window, event);
 }

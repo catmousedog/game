@@ -61,7 +61,7 @@ void GuiButton::handleEvent(const sf::RenderWindow& window, const sf::Event &eve
     if (event.is<sf::Event::MouseMoved>() && _buttonState != ButtonState::PRESSED)
     {
         auto mouse = event.getIf<sf::Event::MouseMoved>();
-        if (_shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mouse->position)))
+        if (_shape.getGlobalBounds().contains(toVec2f(mouse->position)))
             _buttonState = ButtonState::HOVER;
         else
             _buttonState = ButtonState::IDLE;
@@ -69,7 +69,7 @@ void GuiButton::handleEvent(const sf::RenderWindow& window, const sf::Event &eve
     else if (event.is<sf::Event::MouseButtonPressed>())
     {
         auto mouse = event.getIf<sf::Event::MouseButtonPressed>();
-        if (_shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mouse->position)))
+        if (_shape.getGlobalBounds().contains(toVec2f(mouse->position)))
         {
             _buttonState = ButtonState::PRESSED;
         }
@@ -77,7 +77,7 @@ void GuiButton::handleEvent(const sf::RenderWindow& window, const sf::Event &eve
     else if (event.is<sf::Event::MouseButtonReleased>())
     {
         auto mouse = event.getIf<sf::Event::MouseButtonReleased>();
-        if (_shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mouse->position)) && _buttonState == ButtonState::PRESSED)
+        if (_shape.getGlobalBounds().contains(toVec2f(mouse->position)) && _buttonState == ButtonState::PRESSED)
             _onPress();
 
         _buttonState = ButtonState::IDLE;

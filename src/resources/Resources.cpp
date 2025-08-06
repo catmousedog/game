@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+// =============== Construction =============== //
+
 Resources::Resources()
 {
     _resourceDir = RESOURCE_DIR;
