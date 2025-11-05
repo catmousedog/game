@@ -1,0 +1,95 @@
+Button.Resume {
+    Position = (30%, 30%);
+    Size = (40%, 10%);
+    Text = Resume;
+    TextSize = 24;
+
+    Renderer {
+        BackgroundColor = #646496;
+        BackgroundColorDisabled = #E6E6E6;
+        BackgroundColorDown = #7dc8c8;
+        BackgroundColorHover = #7d7dc8;
+        BorderColor = #3C3C3C;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = #1E1EB4;
+        BorderColorHover = black;
+        Borders = (1, 1, 1, 1);
+        Font = "../fonts/FreeMonoBold.ttf";
+        TextColor = #FFFFFF;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}
+
+Button.Options {
+    Position = (30%, 50%);
+    Size = (40%, 10%);
+    Text = Options;
+    TextSize = 24;
+
+    Renderer {
+        BackgroundColor = #646496;
+        BackgroundColorDisabled = #E6E6E6;
+        BackgroundColorDown = #7dc8c8;
+        BackgroundColorHover = #7d7dc8;
+        BorderColor = #3C3C3C;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = #1E1EB4;
+        BorderColorHover = black;
+        Borders = (1, 1, 1, 1);
+        Font = "../fonts/FreeMonoBold.ttf";
+        TextColor = #FFFFFF;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}
+
+Button.ExitToMainMenu {
+    Position = (30%, 70%);
+    Size = (40%, 10%);
+    Text = Exit to Main Menu;
+    TextSize = 24;
+
+    Renderer {
+        BackgroundColor = #646496;
+        BackgroundColorDisabled = #E6E6E6;
+        BackgroundColorDown = #7dc8c8;
+        BackgroundColorHover = #7d7dc8;
+        BorderColor = #3C3C3C;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = #1E1EB4;
+        BorderColorHover = black;
+        Borders = (1, 1, 1, 1);
+        Font = "../fonts/FreeMonoBold.ttf";
+        TextColor = #FFFFFF;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}

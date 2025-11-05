@@ -33,6 +33,6 @@ public:
     // ================ Variables ================= //
 
 private:
-    GuiButton _resumeButton;
-    GuiButton _exitToMainMenuButton;
+    // GuiButton _resumeButton;
+    // GuiButton _exitToMainMenuButton;
 };

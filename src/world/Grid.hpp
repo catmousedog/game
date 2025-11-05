@@ -5,8 +5,8 @@
 #include <memory>
 #include <unordered_map>
 
-#include "../../config/Configuration.hpp"
-#include "../../resources/Resources.hpp"
+#include "../config/Configuration.hpp"
+#include "../resources/Resources.hpp"
 
 class Grid
 {
@@ -16,7 +16,7 @@ public:
 
     // =============== Construction =============== //
 
-    Grid(Configuration &config, Resources &resources, uint size);
+    Grid(const Configuration &config, const Resources &resources, uint size);
 
     // ================== State =================== //
 
@@ -35,8 +35,8 @@ public:
     // ================ Variables ================= //
 
 private:
-    Configuration &_config;
-    Resources &_resources;
+    const Configuration &_config;
+    const Resources &_resources;
 
     sf::Vector2i _gridSize;
     std::vector<Cell> _cells;

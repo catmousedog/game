@@ -34,7 +34,7 @@ public:
     // ================ Variables ================= //
 
 private:
-    GuiFrameRate _guiFrameRate;
-    GuiButton _playButton;
-    GuiButton _exitButton;
+    // GuiFrameRate _guiFrameRate;
+    // GuiButton _playButton;
+    // GuiButton _exitButton;
 };

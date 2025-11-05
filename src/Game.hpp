@@ -70,9 +70,11 @@ public:
 
     StateManager &stateManager() { return _stateManager; }
 
-    Configuration& config() { return _config; }
+    Configuration &config() { return _config; }
 
-    Resources& resources() { return _resources; }
+    Resources &resources() { return _resources; }
+
+    sf::RenderWindow &window() { return _window; }
 
     // ================ Variables ================= //
 

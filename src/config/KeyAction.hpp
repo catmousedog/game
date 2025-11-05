@@ -11,7 +11,7 @@
  * 2. Mode::TOGGLE  toggle switch when pressed
  * 3. Mode::HOLD    hold key that must be held down to be enabled
  */
-class KeyAction
+class Action
 {
 
     // =================== Enum =================== //
@@ -26,32 +26,39 @@ public:
 
     // =============== Construction =============== //
 
-    static unique_ptr<KeyAction> createPress(std::function<void()> &&press)
+    static unique_ptr<Action> createPress(std::function<void()> &&press)
     {
-        unique_ptr<KeyAction> keyAction(new KeyAction());
+        unique_ptr<Action> keyAction(new Action());
         keyAction->mode = Mode::PRESS;
         keyAction->press = std::move(press);
         return keyAction;
     }
 
-    static unique_ptr<KeyAction> createToggle(bool enabled = false)
+    static unique_ptr<Action> createToggle(bool enabled = false)
     {
-        unique_ptr<KeyAction> keyAction(new KeyAction());
+        unique_ptr<Action> keyAction(new Action());
         keyAction->mode = Mode::TOGGLE;
         keyAction->enabled = enabled;
         return keyAction;
     }
 
-    static unique_ptr<KeyAction> createHold(bool enabled = false)
+    static unique_ptr<Action> createHold(bool enabled = false)
     {
-        unique_ptr<KeyAction> keyAction(new KeyAction());
+        unique_ptr<Action> keyAction(new Action());
         keyAction->mode = Mode::HOLD;
         keyAction->enabled = enabled;
         return keyAction;
     }
 
+    std::optional<std::function<void()>> getPress() const
+    {
+        if (mode == Mode::PRESS)
+            return press;
+        return std::nullopt;
+    }
+
 private:
-    KeyAction() {}
+    Action() {}
 
     // ================ Variables ================= //
 

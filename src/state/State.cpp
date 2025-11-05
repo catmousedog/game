@@ -9,23 +9,38 @@ State::State(Game &game) : _game(game) {}
 void State::setup()
 {
     _game.config().loadKeyBinds(*this);
+    _gui.setWindow(_game.window());
+}
+
+void State::update(double dt)
+{
+}
+
+void State::render(sf::RenderWindow &window)
+{
+    _gui.draw();
+}
+
+void State::handleEvent(const sf::RenderWindow &window, const sf::Event &event)
+{
+    _gui.handleEvent(event);
 }
 
 void State::handleKeyPressed(const sf::Event::KeyPressed &keyPressed)
 {
-    KeyAction *action = _keyBinds[keyPressed];
+    Action *action = _keyBinds[keyPressed];
     if (!action)
         return;
 
     switch (action->mode)
     {
-    case KeyAction::Mode::PRESS:
+    case Action::Mode::PRESS:
         action->press();
         break;
-    case KeyAction::Mode::TOGGLE:
+    case Action::Mode::TOGGLE:
         action->enabled = !action->enabled;
         break;
-    case KeyAction::Mode::HOLD:
+    case Action::Mode::HOLD:
         action->enabled = true;
         break;
     }
@@ -33,16 +48,16 @@ void State::handleKeyPressed(const sf::Event::KeyPressed &keyPressed)
 
 void State::handleKeyReleased(const sf::Event::KeyReleased &keyReleased)
 {
-    KeyAction *action = _keyBinds[keyReleased];
+    Action *action = _keyBinds[keyReleased];
     switch (action->mode)
     {
-    case KeyAction::Mode::PRESS:
+    case Action::Mode::PRESS:
         break;
-    case KeyAction::Mode::TOGGLE:
-        // could add another member to KeyAction to store the state
+    case Action::Mode::TOGGLE:
+        // could add another member to Action to store the state
         // this way a toggle can only occur if the key is also released first
         break;
-    case KeyAction::Mode::HOLD:
+    case Action::Mode::HOLD:
         action->enabled = false;
         break;
     }
@@ -50,7 +65,7 @@ void State::handleKeyReleased(const sf::Event::KeyReleased &keyReleased)
 
 bool State::addKeyBind(const KeyBind &keyBind, const string &actionString)
 {
-    KeyAction *action = getKeyAction(actionString);
+    Action *action = getAction(actionString);
     if (!action)
         return false;
 
@@ -61,22 +76,22 @@ bool State::addKeyBind(const KeyBind &keyBind, const string &actionString)
 void State::addToggle(string actionString)
 {
     actionString = StringUtils::toLower(actionString);
-    _actions.emplace(actionString, KeyAction::createToggle());
+    _actions.emplace(actionString, Action::createToggle());
 }
 
 void State::addHold(string actionString)
 {
     actionString = StringUtils::toLower(actionString);
-    _actions.emplace(actionString, KeyAction::createHold());
+    _actions.emplace(actionString, Action::createHold());
 }
 
 void State::addPress(string actionString, std::function<void()> &&press)
 {
     actionString = StringUtils::toLower(actionString);
-    _actions.emplace(actionString, KeyAction::createPress(std::move(press)));
+    _actions.emplace(actionString, Action::createPress(std::move(press)));
 }
 
-KeyAction *State::getKeyAction(string actionString)
+Action *State::getAction(string actionString)
 {
     actionString = StringUtils::toLower(actionString);
     auto action_it = _actions.find(actionString);
@@ -86,14 +101,14 @@ KeyAction *State::getKeyAction(string actionString)
     return action_it->second.get();
 }
 
+// Maybe remove this and instead just use a builtin function to set the button action to this
 std::function<void()> &State::getPressAction(string actionString)
 {
-    actionString = StringUtils::toLower(actionString);
-    KeyAction *keyAction = getKeyAction(actionString);
+    Action *keyAction = getAction(actionString);
     if (!keyAction)
-        PRINT_ERROR("Attempted to get 'press' from a non-existing KeyAction {}", actionString);
-    if (keyAction->mode != KeyAction::Mode::PRESS)
-        PRINT_ERROR("Attempted to get 'press' from a non-Press KeyAction {}", actionString);
+        PRINT_ERROR("Attempted to get 'press' from a non-existing Action {}", actionString);
+    if (keyAction->mode != Action::Mode::PRESS)
+        PRINT_ERROR("Attempted to get 'press' from a non-Press Action {}", actionString);
 
     return keyAction->press;
 }

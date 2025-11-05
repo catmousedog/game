@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../util/Basic.hpp"
+#include "../util/Basic.hpp"
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>

@@ -2,7 +2,7 @@
 
 // =============== Construction =============== //
 
-Grid::Grid(Configuration &config, Resources &resources, uint numCells)
+Grid::Grid(const Configuration &config, const Resources &resources, uint numCells)
     : _config(config), _resources(resources), _gridSize(numCells, numCells)
 {
 

@@ -19,6 +19,18 @@ void Game::setup()
     _window = sf::RenderWindow(sf::VideoMode(toVec2u(_config.windowSize())), "game");
     _window.setFramerateLimit(_config.frameRate());
 
+    // TGUI
+    // _gui.loadWidgetsFromFile("resources/TGUI/MainMenu.txt");
+    // auto widgets = _gui.getWidgets();
+    // for (auto &widget : widgets)
+    // {
+    //     tgui::String name = widget->getWidgetName();
+    //     if (name == "play")
+    //     {
+    //         tgui::Button *button = dynamic_cast<tgui::Button *>(widget.get());
+    //     }
+    // }
+
     // resources
     _resources.loadTextures();
     _resources.loadFonts();
@@ -47,7 +59,7 @@ void Game::run()
     sf::Clock renderClock;
     sf::Clock clock;
 
-    while (_running)
+    while (_running && _window.isOpen())
     {
         // SFML
         clock.restart();
@@ -100,8 +112,9 @@ void Game::updateSFML()
     while (const std::optional optional = _window.pollEvent())
     {
         auto event = optional.value();
+
         if (event.is<sf::Event::Closed>())
-            return;
+            stop();
 
         if (event.is<KeyPressed>())
         {
@@ -124,6 +137,7 @@ void Game::update(double dt)
 void Game::render()
 {
     _window.clear();
+
     if (auto *state = _stateManager.current())
         state->render(_window);
 

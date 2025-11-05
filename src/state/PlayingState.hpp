@@ -2,10 +2,11 @@
 
 #include <SFML/Graphics/View.hpp>
 
-#include "../State.hpp"
-#include "../../gui/GuiFrameRate.hpp"
-#include "CameraView.hpp"
-#include "Grid.hpp"
+#include "State.hpp"
+#include "../world/World.hpp"
+#include "../ui/UIManager.hpp"
+#include "../ui/Input.hpp"
+#include "../render/Renderer.hpp"
 
 class PlayingState : public State
 {
@@ -24,7 +25,7 @@ public:
 
     // =============== SFML Events ================ //
 
-    void handleEvent(const sf::RenderWindow& window, const sf::Event &event) override;
+    void handleEvent(const sf::RenderWindow &window, const sf::Event &event) override;
 
     string name() const override { return "Playing"; };
 
@@ -37,7 +38,8 @@ public:
     // ================ Variables ================= //
 
 private:
-    GuiFrameRate _guiFrameRate;
-    Grid _grid;
-    CameraView _cameraView;
+    World _world;
+    Renderer _renderer;
+    Input _input;
+    UIManager _uiManager;
 };
