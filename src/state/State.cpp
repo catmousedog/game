@@ -12,6 +12,24 @@ void State::setup()
     _gui.setWindow(_game.window());
 }
 
+void State::loadWidgetsFromFile(const string &filePath)
+{
+    _gui.loadWidgetsFromFile(filePath);
+
+    for (auto &widget : _gui.getWidgets())
+    {
+        string name = widget->getWidgetName().toStdString();
+
+        Action* action = getAction(name);
+
+        if (action)
+        {
+            tgui::Button *button = dynamic_cast<tgui::Button *>(widget.get());
+            button->onPress(action->press);
+        }
+    }
+}
+
 void State::update(double dt)
 {
 }

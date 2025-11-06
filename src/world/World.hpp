@@ -15,6 +15,10 @@ public:
 
     void render(sf::RenderWindow &window) const;
 
+    // ================= Getters ================== //
+
+    Grid &grid() { return _grid; }
+
 private:
     Grid _grid;
 };

@@ -16,6 +16,8 @@ void PlayingState::setup()
     addPress("Exit", std::bind(&PlayingState::exit, this));
 
     State::setup();
+
+    _renderer.setup(_game, _world.grid());
 }
 
 // ================== State =================== //

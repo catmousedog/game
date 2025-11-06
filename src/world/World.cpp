@@ -1,7 +1,7 @@
 #include "World.hpp"
 
 World::World(const Configuration &config, const Resources &resources)
-    : _grid(config, resources, 100)
+    : _grid(config, resources, 10)
 {
 }
 

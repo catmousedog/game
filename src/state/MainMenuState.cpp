@@ -15,23 +15,7 @@ void MainMenuState::setup()
     
     State::setup();
 
-    _gui.loadWidgetsFromFile("resources/TGUI/MainMenu.txt");
-
-    auto widgets = _gui.getWidgets();
-    for (auto &widget : widgets)
-    {
-        string name = widget->getWidgetName().toStdString();
-
-        auto test = getAction(name);
-
-        if (test)
-        {
-            tgui::Button *button = dynamic_cast<tgui::Button *>(widget.get());
-            button->onPress(test->press);
-        }
-    }
-
-    const Configuration &config = _game.config();
+    loadWidgetsFromFile("resources/TGUI/MainMenu.txt");
 }
 
 void MainMenuState::update(double dt)

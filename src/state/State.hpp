@@ -36,6 +36,8 @@ public:
      */
     virtual void setup();
 
+    void loadWidgetsFromFile(const string &filePath);
+
     // ================== State =================== //
 
 public:

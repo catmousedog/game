@@ -19,21 +19,7 @@ void MenuState::setup()
 
     State::setup();
 
-    _gui.loadWidgetsFromFile("resources/TGUI/Menu.txt");
-
-    auto widgets = _gui.getWidgets();
-    for (auto &widget : widgets)
-    {
-        string name = widget->getWidgetName().toStdString();
-
-        auto test = getAction(name);
-
-        if (test)
-        {
-            tgui::Button *button = dynamic_cast<tgui::Button *>(widget.get());
-            button->onPress(test->press);
-        }
-    }
+    loadWidgetsFromFile("resources/TGUI/Menu.txt");
 }
 
 void MenuState::update(double dt)
