@@ -8,15 +8,18 @@
 #include <unordered_map>
 #include <memory>
 
-#include "../config/KeyAction.hpp"
-#include "../config/Keybinds.hpp"
+#include "config/Action.hpp"
+#include "config/Keybinds.hpp"
 
-using KeyActionMap = std::unordered_map<string, std::unique_ptr<Action>>;
-using KeyMap = std::unordered_map<KeyBind, Action *>;
+/** Map of unique Actions, indexed by their name. */
+using ActionSet = std::unordered_map<string, unique_ptr<Action>>;
+
+/** Map of non-unique Actions, indexed by their KeyBind. */
+using KeyBindMap = std::unordered_map<KeyBind, Action *>;
 
 class Game;
-class Configuration;
-class Resources;
+class ConfigManager;
+class ResourceManager;
 
 class State
 {
@@ -26,7 +29,7 @@ class State
 public:
     State(Game &game);
 
-    virtual ~State() = default;
+    virtual ~State();
 
     // ================== Setup =================== //
 
@@ -49,9 +52,9 @@ public:
 
     /**
      * @brief Renders the state.
-     * @param window The SFML window to render to.
+     * @param target The SFML target to render to.
      */
-    virtual void render(sf::RenderWindow &window);
+    virtual void render(sf::RenderTarget &target);
 
     // =============== SFML Events ================ //
 
@@ -59,7 +62,7 @@ public:
      * @brief Handles a non sf::Event::KeyPressed event.
      * @param event The sf::Event to handle.
      */
-    virtual void handleEvent(const sf::RenderWindow &window, const sf::Event &event);
+    virtual void handleEvent(const sf::RenderTarget &target, const sf::Event &event);
 
     /**
      * @return The case-sensitive identifier of the state.
@@ -101,8 +104,6 @@ protected:
 
     Action *getAction(string actionString);
 
-    std::function<void()> &getPressAction(string actionString);
-
     // ================ Variables ================= //
 
 protected:
@@ -110,6 +111,6 @@ protected:
     tgui::Gui _gui;
 
 private:
-    KeyMap _keyBinds;
-    KeyActionMap _actions;
+    KeyBindMap _keyBinds;
+    ActionSet _actions;
 };

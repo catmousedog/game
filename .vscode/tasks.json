@@ -54,7 +54,7 @@
 
         // debug
         {
-            "label": "debug: cmake",
+            "label": "debug cmake",
             "type": "shell",
             "command": "cmake -DCMAKE_BUILD_TYPE=Debug ../..",
             "options": {
@@ -66,7 +66,7 @@
             }
         },
         {
-            "label": "debug: build game",
+            "label": "debug build game",
             "type": "shell",
             "command": "make -j 8",
             "options": {
@@ -76,7 +76,7 @@
                 "kind": "build",
                 "isDefault": false
             },
-            "dependsOn": "debug: cmake"
+            "dependsOn": "debug: cmake",
         },
     ]
 }

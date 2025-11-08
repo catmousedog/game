@@ -10,6 +10,7 @@ find_package(TGUI 1 REQUIRED)
 file(GLOB_RECURSE SOURCES src/*.cpp)
 
 add_executable(game ${SOURCES})
+
 target_link_libraries(game PRIVATE
     sfml-graphics
     sfml-window
@@ -18,8 +19,7 @@ target_link_libraries(game PRIVATE
     TGUI::TGUI
 )
 
-# manually build TGUI with SFML 3.0 and dynamically link it here
-
+target_include_directories(game PRIVATE src)
 
 # Enable AddressSanitizer
 # target_compile_options(game PRIVATE -g -fsanitize=address -fno-omit-frame-pointer)

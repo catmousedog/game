@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../util/Basic.hpp"
+#include "util/Basic.hpp"
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -21,11 +21,11 @@ public:
 
     // ================== State =================== //
 
-    void setView(sf::RenderWindow &window);
+    void setView(sf::RenderTarget &target);
 
     // =============== SFML Events ================ //
 
-    void handleEvent(const sf::RenderWindow &window, const sf::Event &event);
+    void handleEvent(const sf::RenderTarget &target, const sf::Event &event);
 
     // ================ Variables ================= //
 

@@ -3,7 +3,7 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
 
-#include "../util/Basic.hpp"
+#include "util/Basic.hpp"
 
 using Key = sf::Keyboard::Key;
 using KeyPressed = sf::Event::KeyPressed;
@@ -46,5 +46,3 @@ namespace std
 }
 
 KeyBind parseKeybind(string keyString);
-
-std::pair<string, string> parseAction(const string &whenActionString);

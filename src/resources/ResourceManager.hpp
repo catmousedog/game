@@ -5,7 +5,8 @@
 
 #include <TGUI/Font.hpp>
 
-#include "../util/Basic.hpp"
+#include "util/Basic.hpp"
+#include "TextureManager.hpp"
 
 using Path = std::filesystem::path;
 
@@ -16,12 +17,12 @@ namespace
     constexpr string RESOURCE_DIR = "resources/";
 }
 
-class Resources
+class ResourceManager
 {
     // =============== Construction =============== //
 
 public:
-    Resources();
+    ResourceManager();
 
     void loadTextures();
 
@@ -31,10 +32,6 @@ public:
 
     const sf::Font &font() const { return _font; }
 
-    const tgui::Font &tfont() const { return _tfont; }
-
-    const sf::Texture &texture() const { return _texture; }
-
     // ================ Variables ================= //
 
 private:
@@ -43,8 +40,7 @@ private:
     Path _fontPath;
 
     sf::Font _font;
-    tgui::Font _tfont;
 
     // resources
-    sf::Texture _texture;
+    TextureManager _textureManager;
 };

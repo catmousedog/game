@@ -2,8 +2,8 @@
 #include <unordered_map>
 
 #include "Keybinds.hpp"
-#include "../util/Utils.hpp"
-#include "../util/Error.hpp"
+#include "util/Utils.hpp"
+#include "util/Error.hpp"
 
 #define KEYMAP_ENTRY(KEY)                    \
     {                                        \
@@ -146,9 +146,4 @@ KeyBind parseKeybind(string keyString)
     }
 
     return keyPressed;
-}
-
-std::pair<string, string> parseAction(const string& actionString)
-{
-    return StringUtils::splitOnce(StringUtils::toLower(actionString), ".");;
 }

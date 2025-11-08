@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "../util/Basic.hpp"
+#include "util/Basic.hpp"
 
 /**
  * @brief Action performed when pressing a keybind.

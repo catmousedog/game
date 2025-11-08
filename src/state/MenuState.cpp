@@ -4,13 +4,17 @@
 #include "MenuState.hpp"
 #include "PlayingState.hpp"
 #include "MainMenuState.hpp"
-#include "../Game.hpp"
-#include "../util/Error.hpp"
+#include "Game.hpp"
+#include "util/Error.hpp"
+
+// =============== Construction =============== //
 
 MenuState::MenuState(Game &game)
     : State(game)
 {
 }
+
+// ================== Setup =================== //
 
 void MenuState::setup()
 {
@@ -22,20 +26,26 @@ void MenuState::setup()
     loadWidgetsFromFile("resources/TGUI/Menu.txt");
 }
 
+// ================== State =================== //
+
 void MenuState::update(double dt)
 {
     State::update(dt);
 }
 
-void MenuState::render(sf::RenderWindow &window)
+void MenuState::render(sf::RenderTarget &target)
 {
-    State::render(window);
+    State::render(target);
 }
 
-void MenuState::handleEvent(const sf::RenderWindow &window, const sf::Event &event)
+// =============== SFML Events ================ //
+
+void MenuState::handleEvent(const sf::RenderTarget &target, const sf::Event &event)
 {
-    State::handleEvent(window, event);
+    State::handleEvent(target, event);
 }
+
+// ================= Actions ================== //
 
 void MenuState::resume()
 {

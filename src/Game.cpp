@@ -15,25 +15,13 @@ Game::~Game()
 void Game::setup()
 {
     // config
-    _config.loadSettings();
-    _window = sf::RenderWindow(sf::VideoMode(toVec2u(_config.windowSize())), "game");
-    _window.setFramerateLimit(_config.frameRate());
-
-    // TGUI
-    // _gui.loadWidgetsFromFile("resources/TGUI/MainMenu.txt");
-    // auto widgets = _gui.getWidgets();
-    // for (auto &widget : widgets)
-    // {
-    //     tgui::String name = widget->getWidgetName();
-    //     if (name == "play")
-    //     {
-    //         tgui::Button *button = dynamic_cast<tgui::Button *>(widget.get());
-    //     }
-    // }
+    _configManager.loadSettings();
+    _window = sf::RenderWindow(sf::VideoMode(toVec2u(_configManager.windowSize())), "game");
+    _window.setFramerateLimit(_configManager.frameRate());
 
     // resources
-    _resources.loadTextures();
-    _resources.loadFonts();
+    _resourceManager.loadTextures();
+    _resourceManager.loadFonts();
 
     // states
     _stateManager.push<MainMenuState>();

@@ -1,8 +1,6 @@
 #pragma once
 
 #include "State.hpp"
-#include "../gui/GuiFrameRate.hpp"
-#include "../gui/GuiButton.hpp"
 
 class MainMenuState : public State
 {
@@ -11,17 +9,19 @@ class MainMenuState : public State
 public:
     MainMenuState(Game &game);
 
+    // ================== Setup =================== //
+
     void setup() override;
 
     // ================== State =================== //
 
     void update(double dt) override;
 
-    void render(sf::RenderWindow &window) override;
+    void render(sf::RenderTarget &target) override;
 
     // =============== SFML Events ================ //
 
-    void handleEvent(const sf::RenderWindow& window, const sf::Event &event) override;
+    void handleEvent(const sf::RenderTarget &target, const sf::Event &event) override;
 
     string name() const override { return "MainMenu"; };
 
@@ -34,7 +34,5 @@ public:
     // ================ Variables ================= //
 
 private:
-    // GuiFrameRate _guiFrameRate;
-    // GuiButton _playButton;
-    // GuiButton _exitButton;
+    
 };

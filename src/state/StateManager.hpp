@@ -85,7 +85,7 @@ private:
         }
     }
 
-    std::stack<std::unique_ptr<State>> _states;
+    std::stack<unique_ptr<State>> _states;
     std::queue<std::function<void()>> _pending;
     Game &_game;
 };

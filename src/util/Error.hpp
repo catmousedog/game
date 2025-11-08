@@ -10,13 +10,13 @@
 #define PRINT_DEBUG(...) print_debug(__VA_ARGS__)
 
 template <typename... Args>
-inline void print_error(std::string fmt, int line, const char *file, const char *func, Args... args)
+inline void print_error(string fmt, int line, const char *file, const char *func, Args... args)
 {
 
-    const std::string red_color = "\033[31m";
-    const std::string reset_color = "\033[0m";
+    const string red_color = "\033[31m";
+    const string reset_color = "\033[0m";
 
-    std::string formatted_message = std::vformat(fmt, std::make_format_args(args...));
+    string formatted_message = std::vformat(fmt, std::make_format_args(args...));
 
     std::cerr << red_color
               << "Error:\t" << formatted_message << "\n"
@@ -28,8 +28,8 @@ inline void print_error(std::string fmt, int line, const char *file, const char 
 template <typename... Args>
 inline void print_debug(Args &&...args)
 {
-    const std::string blue_color = "\033[34m";
-    const std::string reset_color = "\033[0m";
+    const string blue_color = "\033[34m";
+    const string reset_color = "\033[0m";
 
     std::cout << blue_color;
     ((std::cout << args << "\t"), ...);

@@ -12,12 +12,12 @@ using Path = std::filesystem::path;
 
 class State;
 
-class Configuration
+class ConfigManager
 {
 
     // =============== Construction =============== //
 public:
-    Configuration();
+    ConfigManager();
 
     void loadSettings();
     void loadKeyBinds(State &state) const;

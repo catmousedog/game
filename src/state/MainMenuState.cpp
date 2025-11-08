@@ -1,37 +1,46 @@
 #include <memory>
-#include <SFML/System/InputStream.hpp>
+#include <TGUI/Widgets/Tabs.hpp>
 
 #include "MainMenuState.hpp"
 #include "PlayingState.hpp"
-#include "../Game.hpp"
-#include "../util/Error.hpp"
+#include "Game.hpp"
+#include "util/Error.hpp"
+
+// =============== Construction =============== //
 
 MainMenuState::MainMenuState(Game &game) : State(game) {}
+
+// ================== Setup =================== //
 
 void MainMenuState::setup()
 {
     addPress("Play", std::bind(&MainMenuState::play, this));
     addPress("Exit", std::bind(&MainMenuState::exit, this));
-    
+
     State::setup();
 
     loadWidgetsFromFile("resources/TGUI/MainMenu.txt");
 }
+// ================== State =================== //
 
 void MainMenuState::update(double dt)
 {
     State::update(dt);
 }
 
-void MainMenuState::render(sf::RenderWindow &window)
+void MainMenuState::render(sf::RenderTarget &target)
 {
-    State::render(window);
+    State::render(target);
 }
 
-void MainMenuState::handleEvent(const sf::RenderWindow &window, const sf::Event &event)
+// =============== SFML Events ================ //
+
+void MainMenuState::handleEvent(const sf::RenderTarget &target, const sf::Event &event)
 {
-    State::handleEvent(window, event);
+    State::handleEvent(target, event);
 }
+
+// ================= Actions ================== //
 
 void MainMenuState::play()
 {

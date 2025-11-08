@@ -1,7 +1,7 @@
 #pragma once
 
-#include "config/Configuration.hpp"
-#include "resources/Resources.hpp"
+#include "config/ConfigManager.hpp"
+#include "resources/ResourceManager.hpp"
 #include "state/StateManager.hpp"
 
 class Game
@@ -58,29 +58,29 @@ public:
      * @brief Calculates the desired time (s) between update ticks.
      * @return Desired update time (s).
      */
-    double getUpdateGoal() const { return 1.f / (_gameSpeed * _config.tickRate()); }
+    double getUpdateGoal() const { return 1.f / (_gameSpeed * _configManager.tickRate()); }
 
     /**
      * @brief Calculates the desired time (s) between render ticks.
      * @return Desired render time (s).
      */
-    double getRenderGoal() const { return 1.f / _config.frameRate(); }
+    double getRenderGoal() const { return 1.f / _configManager.frameRate(); }
 
     array<double, 3> getDt() const { return {_SFML_dt, _update_dt, _render_dt}; }
 
     StateManager &stateManager() { return _stateManager; }
 
-    Configuration &config() { return _config; }
+    ConfigManager &config() { return _configManager; }
 
-    Resources &resources() { return _resources; }
+    ResourceManager &resourceManager() { return _resourceManager; }
 
     sf::RenderWindow &window() { return _window; }
 
     // ================ Variables ================= //
 
 private:
-    Configuration _config;
-    Resources _resources;
+    ConfigManager _configManager;
+    ResourceManager _resourceManager;
     StateManager _stateManager;
 
     // SFML

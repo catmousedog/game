@@ -1,10 +1,16 @@
 #include "State.hpp"
 
-#include "../Game.hpp"
-#include "../util/Utils.hpp"
-#include "../util/Error.hpp"
+#include "Game.hpp"
+#include "util/Utils.hpp"
+#include "util/Error.hpp"
+
+// =============== Construction =============== //
 
 State::State(Game &game) : _game(game) {}
+
+State::~State() = default;
+
+// ================== Setup =================== //
 
 void State::setup()
 {
@@ -16,33 +22,41 @@ void State::loadWidgetsFromFile(const string &filePath)
 {
     _gui.loadWidgetsFromFile(filePath);
 
+    // add actions to button press
     for (auto &widget : _gui.getWidgets())
     {
         string name = widget->getWidgetName().toStdString();
 
-        Action* action = getAction(name);
+        Action *action = getAction(name);
 
-        if (action)
+        if (action && action->mode == Action::Mode::PRESS)
         {
             tgui::Button *button = dynamic_cast<tgui::Button *>(widget.get());
-            button->onPress(action->press);
+            if (button)
+                button->onPress(action->press);
         }
     }
 }
+
+// ================== State =================== //
 
 void State::update(double dt)
 {
 }
 
-void State::render(sf::RenderWindow &window)
+void State::render(sf::RenderTarget &target)
 {
     _gui.draw();
 }
 
-void State::handleEvent(const sf::RenderWindow &window, const sf::Event &event)
+// =============== SFML Events ================ //
+
+void State::handleEvent(const sf::RenderTarget &target, const sf::Event &event)
 {
     _gui.handleEvent(event);
 }
+
+// ================= Keybinds ================= //
 
 void State::handleKeyPressed(const sf::Event::KeyPressed &keyPressed)
 {
@@ -67,6 +81,9 @@ void State::handleKeyPressed(const sf::Event::KeyPressed &keyPressed)
 void State::handleKeyReleased(const sf::Event::KeyReleased &keyReleased)
 {
     Action *action = _keyBinds[keyReleased];
+    if (!action)
+        return;
+
     switch (action->mode)
     {
     case Action::Mode::PRESS:
@@ -117,16 +134,4 @@ Action *State::getAction(string actionString)
         return nullptr;
 
     return action_it->second.get();
-}
-
-// Maybe remove this and instead just use a builtin function to set the button action to this
-std::function<void()> &State::getPressAction(string actionString)
-{
-    Action *keyAction = getAction(actionString);
-    if (!keyAction)
-        PRINT_ERROR("Attempted to get 'press' from a non-existing Action {}", actionString);
-    if (keyAction->mode != Action::Mode::PRESS)
-        PRINT_ERROR("Attempted to get 'press' from a non-Press Action {}", actionString);
-
-    return keyAction->press;
 }

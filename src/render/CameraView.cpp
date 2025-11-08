@@ -12,14 +12,14 @@ void CameraView::setup(sf::Vector2f center, sf::Vector2f size, bool zoomToMouse)
 
 // ================== State =================== //
 
-void CameraView::setView(sf::RenderWindow &window)
+void CameraView::setView(sf::RenderTarget &target)
 {
-    window.setView(_view);
+    target.setView(_view);
 }
 
 // =============== SFML Events ================ //
 
-void CameraView::handleEvent(const sf::RenderWindow &window, const sf::Event &event)
+void CameraView::handleEvent(const sf::RenderTarget &target, const sf::Event &event)
 {
     if (event.is<sf::Event::MouseButtonPressed>())
     {
@@ -47,8 +47,8 @@ void CameraView::handleEvent(const sf::RenderWindow &window, const sf::Event &ev
 
         if (_dragging)
         {
-            sf::Vector2f worldStart = window.mapPixelToCoords(_dragStartMouse, _view);
-            sf::Vector2f worldNow = window.mapPixelToCoords(mouse->position, _view);
+            sf::Vector2f worldStart = target.mapPixelToCoords(_dragStartMouse, _view);
+            sf::Vector2f worldNow = target.mapPixelToCoords(mouse->position, _view);
             sf::Vector2f delta = worldStart - worldNow;
             _view.setCenter(_dragStartView + delta);
         }
@@ -60,10 +60,10 @@ void CameraView::handleEvent(const sf::RenderWindow &window, const sf::Event &ev
         float factor = 1 - mouse->delta * ZOOM_FACTOR;
         if (_zoomToMouse)
         {
-            sf::Vector2f beforeZoom = window.mapPixelToCoords(mouse->position, _view);
+            sf::Vector2f beforeZoom = target.mapPixelToCoords(mouse->position, _view);
             _view.zoom(factor);
             _zoom *= factor;
-            sf::Vector2f afterZoom = window.mapPixelToCoords(mouse->position, _view);
+            sf::Vector2f afterZoom = target.mapPixelToCoords(mouse->position, _view);
 
             _view.move(beforeZoom - afterZoom);
         }

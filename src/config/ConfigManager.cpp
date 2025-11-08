@@ -1,16 +1,16 @@
 #include <fstream>
 
-#include "Configuration.hpp"
-#include "../util/Error.hpp"
-#include "../util/Utils.hpp"
-#include "../state/State.hpp"
+#include "ConfigManager.hpp"
+#include "util/Error.hpp"
+#include "util/Utils.hpp"
+#include "state/State.hpp"
 
 namespace
 {
     constexpr string CONFIGURATION_DIR = "config/";
 }
 
-Configuration::Configuration()
+ConfigManager::ConfigManager()
 {
     _configDir = CONFIGURATION_DIR;
     _settingsPath = _configDir / "settings.yaml";
@@ -27,7 +27,7 @@ Configuration::Configuration()
     }
 }
 
-void Configuration::loadSettings()
+void ConfigManager::loadSettings()
 {
     try
     {
@@ -43,7 +43,7 @@ void Configuration::loadSettings()
     }
 }
 
-void Configuration::loadKeyBinds(State &state) const
+void ConfigManager::loadKeyBinds(State &state) const
 {
     if (!_keyBindsYAML[state.name()])
         return;
@@ -77,12 +77,12 @@ void Configuration::loadKeyBinds(State &state) const
     }
 }
 
-sf::Vector2f Configuration::absPos(const sf::Vector2f &relPos) const
+sf::Vector2f ConfigManager::absPos(const sf::Vector2f &relPos) const
 {
     return {relPos.x * _windowSize.x, relPos.y * _windowSize.y};
 }
 
-sf::Vector2f Configuration::absPos(float relX, float relY) const
+sf::Vector2f ConfigManager::absPos(float relX, float relY) const
 {
     return {relX * _windowSize.x, relY * _windowSize.y};
 }

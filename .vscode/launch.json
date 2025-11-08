@@ -19,7 +19,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "debug: build game"
+            "preLaunchTask": "debug build game"
         }
     ]
 }

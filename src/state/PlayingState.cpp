@@ -1,14 +1,16 @@
 #include "PlayingState.hpp"
 
-#include "../Game.hpp"
+#include "Game.hpp"
 #include "MenuState.hpp"
 
 // =============== Construction =============== //
 
 PlayingState::PlayingState(Game &game)
-    : State(game), _world(game.config(), game.resources())
+    : State(game), _universe(game), _renderManager(game, _universe) // test if error if universe last
 {
 }
+
+// ================== Setup =================== //
 
 void PlayingState::setup()
 {
@@ -17,7 +19,8 @@ void PlayingState::setup()
 
     State::setup();
 
-    _renderer.setup(_game, _world.grid());
+    _universe.setup();
+    _renderManager.setup();
 }
 
 // ================== State =================== //
@@ -27,27 +30,20 @@ void PlayingState::update(double dt)
     State::update(dt);
 }
 
-void PlayingState::render(sf::RenderWindow &window)
+void PlayingState::render(sf::RenderTarget &target)
 {
-    State::render(window);
+    _renderManager.render(target);
 
-    _renderer.render(window);
-
-    _world.render(window);
-
-    // UI
-    // window.setView(window.getDefaultView());
-    // _guiInfo.render(window);
-    // _guiFrameRate.render(window);
+    State::render(target);
 }
 
 // =============== SFML Events ================ //
 
-void PlayingState::handleEvent(const sf::RenderWindow &window, const sf::Event &event)
+void PlayingState::handleEvent(const sf::RenderTarget &target, const sf::Event &event)
 {
-    State::handleEvent(window, event);
+    State::handleEvent(target, event);
 
-    _renderer.handleEvent(window, event);
+    _renderManager.handleEvent(target, event);
 }
 
 // ================= Actions ================== //
