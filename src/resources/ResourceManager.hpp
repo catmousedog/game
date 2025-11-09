@@ -1,12 +1,11 @@
 #pragma once
 
+#include "TextureManager.hpp"
+#include "util/Basic.hpp"
+
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Texture.hpp>
-
 #include <TGUI/Font.hpp>
-
-#include "util/Basic.hpp"
-#include "TextureManager.hpp"
 
 using Path = std::filesystem::path;
 
@@ -14,14 +13,14 @@ using Path = std::filesystem::path;
 
 namespace
 {
-    constexpr string RESOURCE_DIR = "resources/";
+constexpr string RESOURCE_DIR = "resources/";
 }
 
 class ResourceManager
 {
     // =============== Construction =============== //
 
-public:
+  public:
     ResourceManager();
 
     void loadTextures();
@@ -30,11 +29,14 @@ public:
 
     // ================= Getters ================== //
 
-    const sf::Font &font() const { return _font; }
+    const sf::Font& font() const
+    {
+        return _font;
+    }
 
     // ================ Variables ================= //
 
-private:
+  private:
     Path _resourceDir;
     Path _texturePath;
     Path _fontPath;

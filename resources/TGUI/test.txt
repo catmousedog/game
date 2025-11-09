@@ -1,0 +1,43 @@
+TextArea.TextArea1 {
+    DefaultText = "TPS: 20\nFPS: 60\n";
+    HorizontalScrollbarPolicy = Never;
+    MaximumCharacters = 0;
+    ReadOnly = true;
+    Size = (20%, 10%);
+    Text = "";
+    TextSize = 13;
+    VerticalScrollbarPolicy = Automatic;
+
+    Renderer {
+        BackgroundColor = transparent;
+        BorderColor = transparent;
+        Borders = (1);
+        CaretColor = White;
+        CaretWidth = 1;
+        DefaultTextColor = rgb(155,155,155);
+        Padding = 3;
+        ScrollbarWidth = 16;
+        SelectedTextBackgroundColor = rgb(85,85,85);
+        SelectedTextColor = White;
+        TextColor = White;
+        TextureBackground = None;
+
+        Scrollbar {
+            ArrowBackgroundColor = rgb(25,25,25);
+            ArrowBackgroundColorHover = rgb(50,50,50);
+            ArrowColor = White;
+            ArrowColorHover = White;
+            TextureArrowDown = None;
+            TextureArrowDownHover = None;
+            TextureArrowUp = None;
+            TextureArrowUpHover = None;
+            TextureThumb = None;
+            TextureThumbHover = None;
+            TextureTrack = None;
+            TextureTrackHover = None;
+            ThumbColor = rgb(50,50,50);
+            ThumbColorHover = rgb(55,55,55);
+            TrackColor = rgb(25,25,25);
+        }
+    }
+}

@@ -1,18 +1,15 @@
-#include <memory>
-#include <SFML/System/InputStream.hpp>
-
 #include "MenuState.hpp"
-#include "PlayingState.hpp"
+
 #include "MainMenuState.hpp"
-#include "Game.hpp"
+#include "PlayingState.hpp"
 #include "util/Error.hpp"
+
+#include <SFML/System/InputStream.hpp>
+#include <memory>
 
 // =============== Construction =============== //
 
-MenuState::MenuState(Game &game)
-    : State(game)
-{
-}
+MenuState::MenuState(Game& game) : State(game) {}
 
 // ================== Setup =================== //
 
@@ -28,19 +25,19 @@ void MenuState::setup()
 
 // ================== State =================== //
 
-void MenuState::update(double dt)
+void MenuState::update(GameTime& time)
 {
-    State::update(dt);
+    State::update(time);
 }
 
-void MenuState::render(sf::RenderTarget &target)
+void MenuState::render(sf::RenderTarget& target)
 {
     State::render(target);
 }
 
 // =============== SFML Events ================ //
 
-void MenuState::handleEvent(const sf::RenderTarget &target, const sf::Event &event)
+void MenuState::handleEvent(const sf::RenderTarget& target, const sf::Event& event)
 {
     State::handleEvent(target, event);
 }

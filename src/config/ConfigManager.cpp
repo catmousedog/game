@@ -1,13 +1,14 @@
-#include <fstream>
-
 #include "ConfigManager.hpp"
+
+#include "state/State.hpp"
 #include "util/Error.hpp"
 #include "util/Utils.hpp"
-#include "state/State.hpp"
+
+#include <fstream>
 
 namespace
 {
-    constexpr string CONFIGURATION_DIR = "config/";
+constexpr string CONFIGURATION_DIR = "config/";
 }
 
 ConfigManager::ConfigManager()
@@ -21,7 +22,7 @@ ConfigManager::ConfigManager()
         _settingsYAML = YAML::LoadFile(_settingsPath.string());
         _keyBindsYAML = YAML::LoadFile(_keyBindsPath.string());
     }
-    catch (const YAML::Exception &e)
+    catch (const YAML::Exception& e)
     {
         PRINT_ERROR("Could not load settings or keybinds YAML: {}", e.what());
     }
@@ -37,21 +38,21 @@ void ConfigManager::loadSettings()
         _tickRate = _settingsYAML["tickRate"].as<uint>();
         _windowSize = sf::Vector2i(width, height);
     }
-    catch (const YAML::Exception &e)
+    catch (const YAML::Exception& e)
     {
         PRINT_ERROR("Error parsing settings.yaml: {}", e.what());
     }
 }
 
-void ConfigManager::loadKeyBinds(State &state) const
+void ConfigManager::loadKeyBinds(State& state) const
 {
     if (!_keyBindsYAML[state.name()])
         return;
 
-    for (const auto &actionNode : _keyBindsYAML[state.name()])
+    for (const auto& actionNode : _keyBindsYAML[state.name()])
     {
         string actionName = actionNode.first.as<string>();
-        const YAML::Node &keysNode = actionNode.second["keys"];
+        const YAML::Node& keysNode = actionNode.second["keys"];
 
         vector<string> keyStrings;
         if (keysNode)
@@ -66,7 +67,7 @@ void ConfigManager::loadKeyBinds(State &state) const
             }
         }
 
-        for (const auto &keyStr : keyStrings)
+        for (const auto& keyStr : keyStrings)
         {
             KeyBind keyBind = parseKeybind(keyStr);
             if (!state.addKeyBind(keyBind, actionName))
@@ -77,7 +78,7 @@ void ConfigManager::loadKeyBinds(State &state) const
     }
 }
 
-sf::Vector2f ConfigManager::absPos(const sf::Vector2f &relPos) const
+sf::Vector2f ConfigManager::absPos(const sf::Vector2f& relPos) const
 {
     return {relPos.x * _windowSize.x, relPos.y * _windowSize.y};
 }

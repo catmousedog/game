@@ -1,16 +1,13 @@
 #include "Game.hpp"
-#include "util/Error.hpp"
+
 #include "state/MainMenuState.hpp"
+#include "util/Error.hpp"
 
 // =============== Construction =============== //
 
-Game::Game() : _stateManager(*this)
-{
-}
+Game::Game() : _stateManager(*this) {}
 
-Game::~Game()
-{
-}
+Game::~Game() {}
 
 void Game::setup()
 {
@@ -34,26 +31,24 @@ void Game::run()
 {
     _running = true;
 
-    // desired dt
-    double update_goal = getUpdateGoal();
-    double render_goal = getRenderGoal();
-
     // actual dt
-    _SFML_dt = 0.;
-    _update_dt = 0.;
-    _render_dt = 0.;
+    float tick_rate = 1 / 20.f;
+    float render_rate = 1 / 60.f;
 
-    sf::Clock updateClock;
-    sf::Clock renderClock;
     sf::Clock clock;
+
+    // clock times
+    float now;
+    float prevUpdate = 0.f;
+    float prevRender = 0.f;
+
+    // elapsed time per update
+    float sfml_dt;
+    float update_dt;
+    float render_dt;
 
     while (_running && _window.isOpen())
     {
-        // SFML
-        clock.restart();
-        updateSFML();
-        _SFML_dt = clock.getElapsedTime().asSeconds();
-
         // Perform queued state changes
         _stateManager.performQueued();
 
@@ -63,26 +58,32 @@ void Game::run()
             break;
         }
 
-        // Update logic
-        if (updateClock.getElapsedTime().asSeconds() > update_goal)
-        {
-            updateClock.restart();
+        // SFML
+        now = clock.getElapsedTime().asSeconds();
+        updateSFML();
+        _time.sfml = clock.getElapsedTime().asSeconds() - now; // seconds for sfml
 
+        // Update logic
+        now = clock.getElapsedTime().asSeconds();
+        _time.lagUpdate = now - prevUpdate;
+        if (_time.lagUpdate > tick_rate)
+        {
             // Update
-            clock.restart();
-            update(_update_dt);
-            _update_dt = clock.getElapsedTime().asSeconds();
+            prevUpdate = now;
+            update(_time);
+            _time.update = clock.getElapsedTime().asSeconds() - now; // seconds for update
         }
 
         // Render logic
-        if (renderClock.getElapsedTime().asSeconds() > render_goal)
+        now = clock.getElapsedTime().asSeconds();
+        _time.lagRender = now - prevRender;
+        if (_time.lagRender > render_rate)
         {
-            renderClock.restart();
+            prevRender = now;
 
             // Render
-            clock.restart();
             render();
-            _render_dt = clock.getElapsedTime().asSeconds();
+            _time.render = clock.getElapsedTime().asSeconds() - now; // seconds for render
         }
     }
 
@@ -96,7 +97,7 @@ void Game::stop()
 
 void Game::updateSFML()
 {
-    State *state = _stateManager.current();
+    State* state = _stateManager.current();
     while (const std::optional optional = _window.pollEvent())
     {
         auto event = optional.value();
@@ -106,7 +107,7 @@ void Game::updateSFML()
 
         if (event.is<KeyPressed>())
         {
-            const KeyPressed &SFML_key = *event.getIf<KeyPressed>();
+            const KeyPressed& SFML_key = *event.getIf<KeyPressed>();
             state->handleKeyPressed(SFML_key);
         }
         else
@@ -116,17 +117,17 @@ void Game::updateSFML()
     }
 }
 
-void Game::update(double dt)
+void Game::update(GameTime& time)
 {
-    if (auto *state = _stateManager.current())
-        state->update(dt);
+    if (auto* state = _stateManager.current())
+        state->update(time);
 }
 
 void Game::render()
 {
     _window.clear();
 
-    if (auto *state = _stateManager.current())
+    if (auto* state = _stateManager.current())
         state->render(_window);
 
     _window.display();

@@ -1,29 +1,32 @@
 #pragma once
 
 #include "State.hpp"
-#include "universe/Universe.hpp"
 #include "render/RenderManager.hpp"
+#include "universe/Universe.hpp"
 
 class PlayingState : public State
 {
     // =============== Construction =============== //
 
-public:
-    PlayingState(Game &game);
+  public:
+    PlayingState(Game& game);
 
     void setup() override;
 
     // ================== State =================== //
 
-    void update(double dt) override;
+    void update(GameTime& time) override;
 
-    void render(sf::RenderTarget &target) override;
+    void render(sf::RenderTarget& target) override;
 
     // =============== SFML Events ================ //
 
-    void handleEvent(const sf::RenderTarget &target, const sf::Event &event) override;
+    void handleEvent(const sf::RenderTarget& target, const sf::Event& event) override;
 
-    string name() const override { return "Playing"; };
+    string name() const override
+    {
+        return "Playing";
+    };
 
     // ================= Actions ================== //
 
@@ -33,7 +36,7 @@ public:
 
     // ================ Variables ================= //
 
-private:
+  private:
     Universe _universe;
     RenderManager _renderManager;
 };

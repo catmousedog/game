@@ -1,17 +1,17 @@
 #pragma once
 
-#include <SFML/Graphics/VertexArray.hpp>
-
 #include "util/Basic.hpp"
+
+#include <SFML/Graphics/VertexArray.hpp>
 
 namespace
 {
-    constexpr uint CHUNK_SIZE = 16;
+constexpr uint CHUNK_SIZE = 16;
 }
 
 class Chunk
 {
-public:
+  public:
     // ================= Classes ================== //
 
     struct Renderable
@@ -27,17 +27,17 @@ public:
 
     // ================= Helpers ================== //
 
-    void addQuad(float x, float y, const sf::Vector2f &texCoords);
+    void addQuad(float x, float y, const sf::Vector2f& texCoords);
 
     sf::Vector2f getWorldPosition(float x, float y) const;
 
     // ================= Getters ================== //
 
-    const Renderable &getRenderable();
+    const Renderable& getRenderable();
 
     // ================ Variables ================= //
 
-private:
+  private:
     // whether the chunk needs to be rerendered
     bool _isDirty = true;
     Renderable _renderable;

@@ -1,17 +1,17 @@
 #pragma once
 
-#include <SFML/Graphics/View.hpp>
-
 #include "chunk/ChunkManager.hpp"
+
+#include <SFML/Graphics/View.hpp>
 
 class Game;
 
 class World
 {
-public:
+  public:
     // =============== Construction =============== //
 
-    World(Game &game);
+    World(Game& game);
 
     // ================== Setup =================== //
 
@@ -19,9 +19,12 @@ public:
 
     // ================= Getters ================== //
 
-    inline ChunkManager &chunkManager() { return _chunkManager; }
+    ChunkManager& chunkManager()
+    {
+        return _chunkManager;
+    }
 
-private:
-    Game &_game;
+  private:
+    Game& _game;
     ChunkManager _chunkManager;
 };

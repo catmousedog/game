@@ -2,9 +2,7 @@
 
 // =============== Construction =============== //
 
-World::World(Game &game) : _game(game), _chunkManager(game)
-{
-}
+World::World(Game& game) : _game(game), _chunkManager(game) {}
 
 // ================== Setup =================== //
 

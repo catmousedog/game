@@ -1,21 +1,21 @@
 #pragma once
 
-#include <SFML/Window/Event.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <TGUI/TGUI.hpp>
-#include <TGUI/Backend/SFML-Graphics.hpp>
-
-#include <unordered_map>
-#include <memory>
-
+#include "Game.hpp"
 #include "config/Action.hpp"
 #include "config/Keybinds.hpp"
+
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
+#include <TGUI/Backend/SFML-Graphics.hpp>
+#include <TGUI/Widgets/Button.hpp>
+#include <memory>
+#include <unordered_map>
 
 /** Map of unique Actions, indexed by their name. */
 using ActionSet = std::unordered_map<string, unique_ptr<Action>>;
 
 /** Map of non-unique Actions, indexed by their KeyBind. */
-using KeyBindMap = std::unordered_map<KeyBind, Action *>;
+using KeyBindMap = std::unordered_map<KeyBind, Action*>;
 
 class Game;
 class ConfigManager;
@@ -26,8 +26,8 @@ class State
 
     // =============== Construction =============== //
 
-public:
-    State(Game &game);
+  public:
+    State(Game& game);
 
     virtual ~State();
 
@@ -39,22 +39,22 @@ public:
      */
     virtual void setup();
 
-    void loadWidgetsFromFile(const string &filePath);
+    void loadWidgetsFromFile(const string& filePath);
 
     // ================== State =================== //
 
-public:
+  public:
     /**
      * @brief Updates the state.
      * @param dt Delta time since last frame.
      */
-    virtual void update(double dt);
+    virtual void update(GameTime& time);
 
     /**
      * @brief Renders the state.
      * @param target The SFML target to render to.
      */
-    virtual void render(sf::RenderTarget &target);
+    virtual void render(sf::RenderTarget& target);
 
     // =============== SFML Events ================ //
 
@@ -62,7 +62,7 @@ public:
      * @brief Handles a non sf::Event::KeyPressed event.
      * @param event The sf::Event to handle.
      */
-    virtual void handleEvent(const sf::RenderTarget &target, const sf::Event &event);
+    virtual void handleEvent(const sf::RenderTarget& target, const sf::Event& event);
 
     /**
      * @return The case-sensitive identifier of the state.
@@ -75,9 +75,9 @@ public:
      * @brief Handles an sf::Event::KeyPressed event, by calling the appropriate Action.
      * @param keyPressed The key pressed event.
      */
-    void handleKeyPressed(const sf::Event::KeyPressed &keyPressed);
+    void handleKeyPressed(const sf::Event::KeyPressed& keyPressed);
 
-    void handleKeyReleased(const sf::Event::KeyReleased &keyReleased);
+    void handleKeyReleased(const sf::Event::KeyReleased& keyReleased);
 
     /**
      * @brief Adds a KeyBind->Action to the keybind map of the state.
@@ -86,9 +86,9 @@ public:
      * @param actionString The identifier of the Action to bind to.
      * @return True if the keybind was added, false otherwise.
      */
-    bool addKeyBind(const KeyBind &keybind, const string &actionString);
+    bool addKeyBind(const KeyBind& keybind, const string& actionString);
 
-protected:
+  protected:
     /**
      * @brief Private helper function to add a KeyBind->Action to the keybind
      * map of the state. This should be called in the setup() of the derived class.
@@ -100,17 +100,17 @@ protected:
 
     void addHold(string actionString);
 
-    void addPress(string actionString, std::function<void()> &&press);
+    void addPress(string actionString, std::function<void()>&& press);
 
-    Action *getAction(string actionString);
+    Action* getAction(string actionString);
 
     // ================ Variables ================= //
 
-protected:
-    Game &_game;
+  protected:
+    Game& _game;
     tgui::Gui _gui;
 
-private:
+  private:
     KeyBindMap _keyBinds;
     ActionSet _actions;
 };

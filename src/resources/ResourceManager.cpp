@@ -1,4 +1,5 @@
 #include "ResourceManager.hpp"
+
 #include "util/Error.hpp"
 
 #include <SFML/Graphics.hpp>
@@ -12,9 +13,7 @@ ResourceManager::ResourceManager()
     _fontPath = _resourceDir / "fonts/FreeMono.ttf";
 }
 
-void ResourceManager::loadTextures()
-{
-}
+void ResourceManager::loadTextures() {}
 
 void ResourceManager::loadFonts()
 {

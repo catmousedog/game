@@ -4,15 +4,17 @@
 
 class StringUtils
 {
-public:
-    static string toLower(const string &str)
+  public:
+    static string toLower(const string& str)
     {
-        string lowerStr = str;
-        std::transform(lowerStr.begin(), lowerStr.end(), lowerStr.begin(), ::tolower);
-        return lowerStr;
+        string result;
+        result.reserve(str.length());
+        for (char c : str)
+            result += tolower(c);
+        return result;
     }
 
-    static vector<string> split(const string &str, const string &sep)
+    static vector<string> split(const string& str, const string& sep)
     {
         vector<string> result;
 
@@ -28,7 +30,7 @@ public:
         return result;
     }
 
-    static std::pair<string, string> splitOnce(const string &str, const string &sep)
+    static std::pair<string, string> splitOnce(const string& str, const string& sep)
     {
         string::size_type pos = str.find(sep);
         if (pos != string::npos)

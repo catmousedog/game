@@ -2,34 +2,34 @@
 
 #include "util/Basic.hpp"
 
-#include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
 
 // ================ Constants ================= //
 
 namespace
 {
-    constexpr float ZOOM_FACTOR = 0.05f;
+constexpr float ZOOM_FACTOR = 0.05f;
 }
 
 class CameraView
 {
     // =============== Construction =============== //
 
-public:
+  public:
     void setup(sf::Vector2f center, sf::Vector2f size, bool zoomToMouse);
 
     // ================== State =================== //
 
-    void setView(sf::RenderTarget &target);
+    void setView(sf::RenderTarget& target);
 
     // =============== SFML Events ================ //
 
-    void handleEvent(const sf::RenderTarget &target, const sf::Event &event);
+    void handleEvent(const sf::RenderTarget& target, const sf::Event& event);
 
     // ================ Variables ================= //
 
-private:
+  private:
     sf::View _view;
 
     bool _zoomToMouse = false;

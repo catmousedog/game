@@ -1,12 +1,10 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-
-#include <yaml-cpp/yaml.h>
-
-#include <filesystem>
-
 #include "Keybinds.hpp"
+
+#include <SFML/Graphics.hpp>
+#include <filesystem>
+#include <yaml-cpp/yaml.h>
 
 using Path = std::filesystem::path;
 
@@ -16,31 +14,46 @@ class ConfigManager
 {
 
     // =============== Construction =============== //
-public:
+  public:
     ConfigManager();
 
     void loadSettings();
-    void loadKeyBinds(State &state) const;
+    void loadKeyBinds(State& state) const;
 
     // ================= Getters ================== //
 
-    sf::Vector2f absPos(const sf::Vector2f &pos) const;
+    sf::Vector2f absPos(const sf::Vector2f& pos) const;
 
     sf::Vector2f absPos(float relX, float relY) const;
 
-    sf::Vector2i windowSize() const { return _windowSize; }
+    sf::Vector2i windowSize() const
+    {
+        return _windowSize;
+    }
 
-    float windowRatio() const { return static_cast<float>(_windowSize.x) / _windowSize.y; }
+    float windowRatio() const
+    {
+        return static_cast<float>(_windowSize.x) / _windowSize.y;
+    }
 
-    uint frameRate() const { return _frameRate; }
+    uint frameRate() const
+    {
+        return _frameRate;
+    }
 
-    uint tickRate() const { return _tickRate; }
+    uint tickRate() const
+    {
+        return _tickRate;
+    }
 
-    bool zoomToMouse() const { return _zoomToMouse; }
+    bool zoomToMouse() const
+    {
+        return _zoomToMouse;
+    }
 
     // ================ Variables ================= //
 
-private:
+  private:
     // paths
     Path _configDir;
     Path _settingsPath;

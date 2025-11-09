@@ -6,8 +6,8 @@ class MainMenuState : public State
 {
     // =============== Construction =============== //
 
-public:
-    MainMenuState(Game &game);
+  public:
+    MainMenuState(Game& game);
 
     // ================== Setup =================== //
 
@@ -15,15 +15,18 @@ public:
 
     // ================== State =================== //
 
-    void update(double dt) override;
+    void update(GameTime& time) override;
 
-    void render(sf::RenderTarget &target) override;
+    void render(sf::RenderTarget& target) override;
 
     // =============== SFML Events ================ //
 
-    void handleEvent(const sf::RenderTarget &target, const sf::Event &event) override;
+    void handleEvent(const sf::RenderTarget& target, const sf::Event& event) override;
 
-    string name() const override { return "MainMenu"; };
+    string name() const override
+    {
+        return "MainMenu";
+    };
 
     // ================= Actions ================== //
 
@@ -33,6 +36,5 @@ public:
 
     // ================ Variables ================= //
 
-private:
-    
+  private:
 };

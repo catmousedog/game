@@ -5,8 +5,9 @@
 
 // =============== Construction =============== //
 
-PlayingState::PlayingState(Game &game)
-    : State(game), _universe(game), _renderManager(game, _universe) // test if error if universe last
+PlayingState::PlayingState(Game& game)
+    : State(game), _universe(game),
+      _renderManager(game, _universe, _gui) // test if error if universe last
 {
 }
 
@@ -25,12 +26,13 @@ void PlayingState::setup()
 
 // ================== State =================== //
 
-void PlayingState::update(double dt)
+void PlayingState::update(GameTime& time)
 {
-    State::update(dt);
+    State::update(time);
+    _renderManager.update(time);
 }
 
-void PlayingState::render(sf::RenderTarget &target)
+void PlayingState::render(sf::RenderTarget& target)
 {
     _renderManager.render(target);
 
@@ -39,7 +41,7 @@ void PlayingState::render(sf::RenderTarget &target)
 
 // =============== SFML Events ================ //
 
-void PlayingState::handleEvent(const sf::RenderTarget &target, const sf::Event &event)
+void PlayingState::handleEvent(const sf::RenderTarget& target, const sf::Event& event)
 {
     State::handleEvent(target, event);
 

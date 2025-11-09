@@ -2,9 +2,7 @@
 
 // =============== Construction =============== //
 
-ChunkManager::ChunkManager(Game &game) : _game(game)
-{
-}
+ChunkManager::ChunkManager(Game& game) : _game(game) {}
 
 // ================== Setup =================== //
 

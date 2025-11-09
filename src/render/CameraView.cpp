@@ -12,14 +12,14 @@ void CameraView::setup(sf::Vector2f center, sf::Vector2f size, bool zoomToMouse)
 
 // ================== State =================== //
 
-void CameraView::setView(sf::RenderTarget &target)
+void CameraView::setView(sf::RenderTarget& target)
 {
     target.setView(_view);
 }
 
 // =============== SFML Events ================ //
 
-void CameraView::handleEvent(const sf::RenderTarget &target, const sf::Event &event)
+void CameraView::handleEvent(const sf::RenderTarget& target, const sf::Event& event)
 {
     if (event.is<sf::Event::MouseButtonPressed>())
     {

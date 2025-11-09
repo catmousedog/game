@@ -1,8 +1,8 @@
 #pragma once
 
-#include <functional>
-
 #include "util/Basic.hpp"
+
+#include <functional>
 
 /**
  * @brief Action performed when pressing a keybind.
@@ -16,7 +16,7 @@ class Action
 
     // =================== Enum =================== //
 
-public:
+  public:
     enum class Mode
     {
         PRESS,
@@ -26,7 +26,7 @@ public:
 
     // =============== Construction =============== //
 
-    static unique_ptr<Action> createPress(std::function<void()> &&press)
+    static unique_ptr<Action> createPress(std::function<void()>&& press)
     {
         unique_ptr<Action> keyAction(new Action());
         keyAction->mode = Mode::PRESS;
@@ -57,12 +57,12 @@ public:
         return std::nullopt;
     }
 
-private:
+  private:
     Action() {}
 
     // ================ Variables ================= //
 
-public:
+  public:
     Mode mode;
     std::function<void()> press = nullptr;
     bool enabled = false;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GameContext.hpp"
 #include "config/ConfigManager.hpp"
 #include "resources/ResourceManager.hpp"
 #include "state/StateManager.hpp"
@@ -7,8 +8,7 @@
 class Game
 {
     // =============== Construction =============== //
-
-public:
+  public:
     /**
      * @brief Constructor for the Game class.
      */
@@ -44,7 +44,7 @@ public:
     /**
      * @brief Runs the game loop.
      */
-    void update(double dt);
+    void update(GameTime& time);
 
     /**
      * @brief Runs the render loop.
@@ -53,32 +53,30 @@ public:
 
     // ================= Getters ================== //
 
-public:
-    /**
-     * @brief Calculates the desired time (s) between update ticks.
-     * @return Desired update time (s).
-     */
-    double getUpdateGoal() const { return 1.f / (_gameSpeed * _configManager.tickRate()); }
+  public:
+    StateManager& stateManager()
+    {
+        return _stateManager;
+    }
 
-    /**
-     * @brief Calculates the desired time (s) between render ticks.
-     * @return Desired render time (s).
-     */
-    double getRenderGoal() const { return 1.f / _configManager.frameRate(); }
+    ConfigManager& configManager()
+    {
+        return _configManager;
+    }
 
-    array<double, 3> getDt() const { return {_SFML_dt, _update_dt, _render_dt}; }
+    ResourceManager& resourceManager()
+    {
+        return _resourceManager;
+    }
 
-    StateManager &stateManager() { return _stateManager; }
-
-    ConfigManager &config() { return _configManager; }
-
-    ResourceManager &resourceManager() { return _resourceManager; }
-
-    sf::RenderWindow &window() { return _window; }
+    sf::RenderWindow& window()
+    {
+        return _window;
+    }
 
     // ================ Variables ================= //
 
-private:
+  private:
     ConfigManager _configManager;
     ResourceManager _resourceManager;
     StateManager _stateManager;
@@ -89,9 +87,8 @@ private:
 
     // variables
     bool _running;
-    double _gameSpeed = 1.;
-    // dt
-    double _SFML_dt;
-    double _update_dt;
-    double _render_dt;
+    float _gameSpeed = 1.;
+
+    // tick times
+    GameTime _time;
 };

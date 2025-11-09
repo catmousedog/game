@@ -1,12 +1,12 @@
 #include "State.hpp"
 
 #include "Game.hpp"
-#include "util/Utils.hpp"
 #include "util/Error.hpp"
+#include "util/Utils.hpp"
 
 // =============== Construction =============== //
 
-State::State(Game &game) : _game(game) {}
+State::State(Game& game) : _game(game) {}
 
 State::~State() = default;
 
@@ -14,24 +14,24 @@ State::~State() = default;
 
 void State::setup()
 {
-    _game.config().loadKeyBinds(*this);
+    _game.configManager().loadKeyBinds(*this);
     _gui.setWindow(_game.window());
 }
 
-void State::loadWidgetsFromFile(const string &filePath)
+void State::loadWidgetsFromFile(const string& filePath)
 {
-    _gui.loadWidgetsFromFile(filePath);
+    _gui.loadWidgetsFromFile(filePath, false);
 
     // add actions to button press
-    for (auto &widget : _gui.getWidgets())
+    for (auto& widget : _gui.getWidgets())
     {
         string name = widget->getWidgetName().toStdString();
 
-        Action *action = getAction(name);
+        Action* action = getAction(name);
 
         if (action && action->mode == Action::Mode::PRESS)
         {
-            tgui::Button *button = dynamic_cast<tgui::Button *>(widget.get());
+            tgui::Button* button = dynamic_cast<tgui::Button*>(widget.get());
             if (button)
                 button->onPress(action->press);
         }
@@ -40,27 +40,25 @@ void State::loadWidgetsFromFile(const string &filePath)
 
 // ================== State =================== //
 
-void State::update(double dt)
-{
-}
+void State::update(GameTime& time) {}
 
-void State::render(sf::RenderTarget &target)
+void State::render(sf::RenderTarget& target)
 {
     _gui.draw();
 }
 
 // =============== SFML Events ================ //
 
-void State::handleEvent(const sf::RenderTarget &target, const sf::Event &event)
+void State::handleEvent(const sf::RenderTarget& target, const sf::Event& event)
 {
     _gui.handleEvent(event);
 }
 
 // ================= Keybinds ================= //
 
-void State::handleKeyPressed(const sf::Event::KeyPressed &keyPressed)
+void State::handleKeyPressed(const sf::Event::KeyPressed& keyPressed)
 {
-    Action *action = _keyBinds[keyPressed];
+    Action* action = _keyBinds[keyPressed];
     if (!action)
         return;
 
@@ -78,9 +76,9 @@ void State::handleKeyPressed(const sf::Event::KeyPressed &keyPressed)
     }
 }
 
-void State::handleKeyReleased(const sf::Event::KeyReleased &keyReleased)
+void State::handleKeyReleased(const sf::Event::KeyReleased& keyReleased)
 {
-    Action *action = _keyBinds[keyReleased];
+    Action* action = _keyBinds[keyReleased];
     if (!action)
         return;
 
@@ -98,9 +96,9 @@ void State::handleKeyReleased(const sf::Event::KeyReleased &keyReleased)
     }
 }
 
-bool State::addKeyBind(const KeyBind &keyBind, const string &actionString)
+bool State::addKeyBind(const KeyBind& keyBind, const string& actionString)
 {
-    Action *action = getAction(actionString);
+    Action* action = getAction(actionString);
     if (!action)
         return false;
 
@@ -120,13 +118,13 @@ void State::addHold(string actionString)
     _actions.emplace(actionString, Action::createHold());
 }
 
-void State::addPress(string actionString, std::function<void()> &&press)
+void State::addPress(string actionString, std::function<void()>&& press)
 {
     actionString = StringUtils::toLower(actionString);
     _actions.emplace(actionString, Action::createPress(std::move(press)));
 }
 
-Action *State::getAction(string actionString)
+Action* State::getAction(string actionString)
 {
     actionString = StringUtils::toLower(actionString);
     auto action_it = _actions.find(actionString);

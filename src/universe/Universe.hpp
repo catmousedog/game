@@ -1,15 +1,15 @@
 #pragma once
 
-#include <SFML/Graphics/View.hpp>
-
 #include "world/WorldManager.hpp"
+
+#include <SFML/Graphics/View.hpp>
 
 class Universe
 {
-public:
+  public:
     // =============== Construction =============== //
 
-    Universe(Game &game);
+    Universe(Game& game);
 
     // ================== Setup =================== //
 
@@ -17,12 +17,15 @@ public:
 
     // ================= Getters ================== //
 
-    WorldManager &worldManager() { return _worldManager; }
+    WorldManager& worldManager()
+    {
+        return _worldManager;
+    }
 
     // ================ Variables ================= //
 
-private:
-    Game &_game;
+  private:
+    Game& _game;
 
     WorldManager _worldManager;
 

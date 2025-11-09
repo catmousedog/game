@@ -1,6 +1,6 @@
-#include <SFML/Graphics/Vertex.hpp>
-
 #include "Chunk.hpp"
+
+#include <SFML/Graphics/Vertex.hpp>
 
 // =============== Construction =============== //
 
@@ -14,7 +14,7 @@ Chunk::Chunk(int cx, int cy) : _cx(cx), _cy(cy)
 
 // ================= Helpers ================== //
 
-void Chunk::addQuad(float x, float y, const sf::Vector2f &texCoords)
+void Chunk::addQuad(float x, float y, const sf::Vector2f& texCoords)
 {
     sf::Vertex vertex;
 
@@ -56,7 +56,7 @@ sf::Vector2f Chunk::getWorldPosition(float x, float y) const
 
 // ================= Getters ================== //
 
-const Chunk::Renderable &Chunk::getRenderable()
+const Chunk::Renderable& Chunk::getRenderable()
 {
     if (_isDirty)
     {

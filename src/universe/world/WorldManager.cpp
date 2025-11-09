@@ -2,9 +2,7 @@
 
 // =============== Construction =============== //
 
-WorldManager::WorldManager(Game &game) : _game(game)
-{
-}
+WorldManager::WorldManager(Game& game) : _game(game) {}
 
 // ================== Setup =================== //
 
@@ -17,7 +15,7 @@ void WorldManager::setup()
 
 // ================= Getters ================== //
 
-World &WorldManager::getWorld(uint index)
+World& WorldManager::getWorld(uint index)
 {
     return _worlds[index];
 }

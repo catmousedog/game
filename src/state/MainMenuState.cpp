@@ -1,14 +1,15 @@
-#include <memory>
-#include <TGUI/Widgets/Tabs.hpp>
-
 #include "MainMenuState.hpp"
-#include "PlayingState.hpp"
+
 #include "Game.hpp"
+#include "PlayingState.hpp"
 #include "util/Error.hpp"
+
+#include <TGUI/Widgets/Tabs.hpp>
+#include <memory>
 
 // =============== Construction =============== //
 
-MainMenuState::MainMenuState(Game &game) : State(game) {}
+MainMenuState::MainMenuState(Game& game) : State(game) {}
 
 // ================== Setup =================== //
 
@@ -23,19 +24,19 @@ void MainMenuState::setup()
 }
 // ================== State =================== //
 
-void MainMenuState::update(double dt)
+void MainMenuState::update(GameTime& time)
 {
-    State::update(dt);
+    State::update(time);
 }
 
-void MainMenuState::render(sf::RenderTarget &target)
+void MainMenuState::render(sf::RenderTarget& target)
 {
     State::render(target);
 }
 
 // =============== SFML Events ================ //
 
-void MainMenuState::handleEvent(const sf::RenderTarget &target, const sf::Event &event)
+void MainMenuState::handleEvent(const sf::RenderTarget& target, const sf::Event& event)
 {
     State::handleEvent(target, event);
 }

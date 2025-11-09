@@ -1,8 +1,6 @@
 #include "Universe.hpp"
 
-Universe::Universe(Game &game) : _game(game), _worldManager(game)
-{
-}
+Universe::Universe(Game& game) : _game(game), _worldManager(game) {}
 
 void Universe::setup()
 {

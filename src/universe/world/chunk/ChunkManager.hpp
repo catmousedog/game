@@ -1,16 +1,16 @@
 #pragma once
 
-#include "util/Basic.hpp"
 #include "Chunk.hpp"
+#include "util/Basic.hpp"
 
 class Game;
 
 class ChunkManager
 {
-public:
+  public:
     // =============== Construction =============== //
 
-    ChunkManager(Game &game);
+    ChunkManager(Game& game);
 
     // ================== Setup =================== //
 
@@ -18,12 +18,15 @@ public:
 
     // ================= Getters ================== //
 
-    vector<Chunk> &getChunks() { return _chunks; }
+    vector<Chunk>& getChunks()
+    {
+        return _chunks;
+    }
 
     // ================ Variables ================= //
 
-private:
-    Game &_game;
+  private:
+    Game& _game;
 
     vector<Chunk> _chunks;
 };

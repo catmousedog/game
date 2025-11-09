@@ -1,8 +1,8 @@
 #pragma once
 
-#include <SFML/Graphics/Rect.hpp>
-
 #include "util/Basic.hpp"
+
+#include <SFML/Graphics/Rect.hpp>
 
 struct Renderable
 {
