@@ -14,56 +14,56 @@
 class Action
 {
 
-    // =================== Enum =================== //
+	// =================== Enum =================== //
 
   public:
-    enum class Mode
-    {
-        PRESS,
-        TOGGLE,
-        HOLD
-    };
+	enum class Mode
+	{
+		PRESS,
+		TOGGLE,
+		HOLD
+	};
 
-    // =============== Construction =============== //
+	// =============== Construction =============== //
 
-    static unique_ptr<Action> createPress(std::function<void()>&& press)
-    {
-        unique_ptr<Action> keyAction(new Action());
-        keyAction->mode = Mode::PRESS;
-        keyAction->press = std::move(press);
-        return keyAction;
-    }
+	static unique_ptr<Action> createPress(std::function<void()>&& press)
+	{
+		unique_ptr<Action> keyAction(new Action());
+		keyAction->mode = Mode::PRESS;
+		keyAction->press = std::move(press);
+		return keyAction;
+	}
 
-    static unique_ptr<Action> createToggle(bool enabled = false)
-    {
-        unique_ptr<Action> keyAction(new Action());
-        keyAction->mode = Mode::TOGGLE;
-        keyAction->enabled = enabled;
-        return keyAction;
-    }
+	static unique_ptr<Action> createToggle(bool enabled = false)
+	{
+		unique_ptr<Action> keyAction(new Action());
+		keyAction->mode = Mode::TOGGLE;
+		keyAction->enabled = enabled;
+		return keyAction;
+	}
 
-    static unique_ptr<Action> createHold(bool enabled = false)
-    {
-        unique_ptr<Action> keyAction(new Action());
-        keyAction->mode = Mode::HOLD;
-        keyAction->enabled = enabled;
-        return keyAction;
-    }
+	static unique_ptr<Action> createHold(bool enabled = false)
+	{
+		unique_ptr<Action> keyAction(new Action());
+		keyAction->mode = Mode::HOLD;
+		keyAction->enabled = enabled;
+		return keyAction;
+	}
 
-    std::optional<std::function<void()>> getPress() const
-    {
-        if (mode == Mode::PRESS)
-            return press;
-        return std::nullopt;
-    }
+	std::optional<std::function<void()>> getPress() const
+	{
+		if (mode == Mode::PRESS)
+			return press;
+		return std::nullopt;
+	}
 
   private:
-    Action() {}
+	Action() {}
 
-    // ================ Variables ================= //
+	// ================ Variables ================= //
 
   public:
-    Mode mode;
-    std::function<void()> press = nullptr;
-    bool enabled = false;
+	Mode mode;
+	std::function<void()> press = nullptr;
+	bool enabled = false;
 };

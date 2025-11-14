@@ -1,28 +1,31 @@
 #pragma once
 
-#include "Game.hpp"
-#include "util/Basic.hpp"
+#include "GameContext.hpp"
+#include "components/DebugPanel.hpp"
 
 #include <TGUI/Backend/SFML-Graphics.hpp>
-#include <TGUI/Widgets/TextArea.hpp>
 
 class UIManager
 {
-    // =============== Construction =============== //
+	// =============== Construction =============== //
 
   public:
-    UIManager(tgui::Gui& gui);
+	UIManager(tgui::Gui& gui);
 
-    // ================== Setup =================== //
+	// ================== Setup =================== //
 
-    void setup();
+	void setup();
 
-    // ================== State =================== //
+	// ================== State =================== //
 
-    void update(GameTime& time);
+	void update(GameTime& time);
 
-    // ================ Variables ================= //
+	// =============== SFML Events ================ //
+
+	void handleEvent(const sf::RenderTarget& target, const sf::Event& event);
+
+	// ================ Variables ================= //
   private:
-    tgui::Gui& _gui;
-    tgui::TextArea::Ptr _textArea;  
+	tgui::Gui& _gui;
+	DebugPanel _debugPanel;
 };

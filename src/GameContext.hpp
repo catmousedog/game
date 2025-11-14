@@ -2,12 +2,9 @@
 
 struct GameTime
 {
-    // lag/overshoot times
-    float lagUpdate;
-    float lagRender;
-
-    // actual update times
-    float sfml;
-    float update;
-    float render;
+	float dt;
+	// actual update times
+	float sfml;
+	float update;
+	float render;
 };

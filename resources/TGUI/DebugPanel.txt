@@ -1,4 +1,4 @@
-TextArea.TextArea1 {
+TextArea.DebugPanel {
     DefaultText = "TPS: 20\nFPS: 60\n";
     HorizontalScrollbarPolicy = Never;
     MaximumCharacters = 0;

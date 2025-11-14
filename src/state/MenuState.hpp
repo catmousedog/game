@@ -4,35 +4,35 @@
 
 class MenuState : public State
 {
-    // =============== Construction =============== //
+	// =============== Construction =============== //
 
   public:
-    MenuState(Game& game);
+	MenuState(Game& game);
 
-    void setup() override;
+	void setup() override;
 
-    // ================== State =================== //
+	// ================== State =================== //
 
-    void update(GameTime& time) override;
+	void update(GameTime& time) override;
 
-    void render(sf::RenderTarget& target) override;
+	void render(sf::RenderTarget& target) override;
 
-    // =============== SFML Events ================ //
+	// =============== SFML Events ================ //
 
-    void handleEvent(const sf::RenderTarget& target, const sf::Event& event) override;
+	void handleEvent(const sf::RenderTarget& target, const sf::Event& event) override;
 
-    string name() const override
-    {
-        return "Menu";
-    };
+	string name() const override
+	{
+		return "Menu";
+	};
 
-    // ================= Actions ================== //
+	// ================= Actions ================== //
 
-    void resume();
+	void resume();
 
-    void exitToMainMenu();
+	void exitToMainMenu();
 
-    // ================ Variables ================= //
+	// ================ Variables ================= //
 
   private:
 };

@@ -6,6 +6,9 @@ build/
 # keep .vscode files though
 # .vscode/
 
+# cache
+.cache/
+
 # Prerequisites
 *.d
 

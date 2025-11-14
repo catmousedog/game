@@ -6,37 +6,37 @@
 
 class PlayingState : public State
 {
-    // =============== Construction =============== //
+	// =============== Construction =============== //
 
   public:
-    PlayingState(Game& game);
+	PlayingState(Game& game);
 
-    void setup() override;
+	void setup() override;
 
-    // ================== State =================== //
+	// ================== State =================== //
 
-    void update(GameTime& time) override;
+	void update(GameTime& time) override;
 
-    void render(sf::RenderTarget& target) override;
+	void render(sf::RenderTarget& target) override;
 
-    // =============== SFML Events ================ //
+	// =============== SFML Events ================ //
 
-    void handleEvent(const sf::RenderTarget& target, const sf::Event& event) override;
+	void handleEvent(const sf::RenderTarget& target, const sf::Event& event) override;
 
-    string name() const override
-    {
-        return "Playing";
-    };
+	string name() const override
+	{
+		return "Playing";
+	};
 
-    // ================= Actions ================== //
+	// ================= Actions ================== //
 
-    void menu();
+	void menu();
 
-    void exit();
+	void exit();
 
-    // ================ Variables ================= //
+	// ================ Variables ================= //
 
   private:
-    Universe _universe;
-    RenderManager _renderManager;
+	Universe _universe;
+	RenderManager _renderManager;
 };

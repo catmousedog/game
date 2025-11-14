@@ -9,22 +9,22 @@ class Game;
 class World
 {
   public:
-    // =============== Construction =============== //
+	// =============== Construction =============== //
 
-    World(Game& game);
+	World(Game& game);
 
-    // ================== Setup =================== //
+	// ================== Setup =================== //
 
-    void setup();
+	void setup();
 
-    // ================= Getters ================== //
+	// ================= Getters ================== //
 
-    ChunkManager& chunkManager()
-    {
-        return _chunkManager;
-    }
+	ChunkManager& chunkManager()
+	{
+		return _chunkManager;
+	}
 
   private:
-    Game& _game;
-    ChunkManager _chunkManager;
+	Game& _game;
+	ChunkManager _chunkManager;
 };

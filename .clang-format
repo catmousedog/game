@@ -1,5 +1,7 @@
 BasedOnStyle: LLVM
+UseTab: Always
 IndentWidth: 4
+TabWidth: 4
 ColumnLimit: 100
 SortIncludes: true
 IncludeBlocks: Regroup
@@ -8,4 +10,3 @@ BreakBeforeBraces: Allman
 AllowShortFunctionsOnASingleLine: Empty
 PointerAlignment: Left
 SpaceAfterCStyleCast: true
-UseTab: Never

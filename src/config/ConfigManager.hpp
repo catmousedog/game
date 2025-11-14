@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Keybinds.hpp"
-
 #include <SFML/Graphics.hpp>
 #include <filesystem>
 #include <yaml-cpp/yaml.h>
@@ -13,62 +11,62 @@ class State;
 class ConfigManager
 {
 
-    // =============== Construction =============== //
+	// =============== Construction =============== //
   public:
-    ConfigManager();
+	ConfigManager();
 
-    void loadSettings();
-    void loadKeyBinds(State& state) const;
+	void loadSettings();
+	void loadKeyBinds(State& state) const;
 
-    // ================= Getters ================== //
+	// ================= Getters ================== //
 
-    sf::Vector2f absPos(const sf::Vector2f& pos) const;
+	sf::Vector2f absPos(const sf::Vector2f& pos) const;
 
-    sf::Vector2f absPos(float relX, float relY) const;
+	sf::Vector2f absPos(float relX, float relY) const;
 
-    sf::Vector2i windowSize() const
-    {
-        return _windowSize;
-    }
+	sf::Vector2i windowSize() const
+	{
+		return _windowSize;
+	}
 
-    float windowRatio() const
-    {
-        return static_cast<float>(_windowSize.x) / _windowSize.y;
-    }
+	float windowRatio() const
+	{
+		return static_cast<float>(_windowSize.x) / _windowSize.y;
+	}
 
-    uint frameRate() const
-    {
-        return _frameRate;
-    }
+	float frameTime() const
+	{
+		return 1.f / (float) _fps;
+	}
 
-    uint tickRate() const
-    {
-        return _tickRate;
-    }
+	float tickTime() const
+	{
+		return 1.f / (float) _tps;
+	}
 
-    bool zoomToMouse() const
-    {
-        return _zoomToMouse;
-    }
+	bool zoomToMouse() const
+	{
+		return _zoomToMouse;
+	}
 
-    // ================ Variables ================= //
+	// ================ Variables ================= //
 
   private:
-    // paths
-    Path _configDir;
-    Path _settingsPath;
-    Path _keyBindsPath;
+	// paths
+	Path _configDir;
+	Path _settingsPath;
+	Path _keyBindsPath;
 
-    Path _resourceDir;
-    Path _fontPath;
+	Path _resourceDir;
+	Path _fontPath;
 
-    // settings
-    YAML::Node _settingsYAML;
-    YAML::Node _keyBindsYAML;
+	// settings
+	YAML::Node _settingsYAML;
+	YAML::Node _keyBindsYAML;
 
-    // cached values
-    sf::Vector2i _windowSize;
-    uint _frameRate = 30;
-    uint _tickRate = 20;
-    bool _zoomToMouse = false;
+	// cached values
+	sf::Vector2i _windowSize;
+	uint _fps;
+	uint _tps;
+	bool _zoomToMouse;
 };

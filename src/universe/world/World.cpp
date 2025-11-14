@@ -8,5 +8,5 @@ World::World(Game& game) : _game(game), _chunkManager(game) {}
 
 void World::setup()
 {
-    _chunkManager.setup();
+	_chunkManager.setup();
 }

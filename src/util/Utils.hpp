@@ -5,37 +5,37 @@
 class StringUtils
 {
   public:
-    static string toLower(const string& str)
-    {
-        string result;
-        result.reserve(str.length());
-        for (char c : str)
-            result += tolower(c);
-        return result;
-    }
+	static string toLower(const string& str)
+	{
+		string result;
+		result.reserve(str.length());
+		for (char c : str)
+			result += tolower(c);
+		return result;
+	}
 
-    static vector<string> split(const string& str, const string& sep)
-    {
-        vector<string> result;
+	static vector<string> split(const string& str, const string& sep)
+	{
+		vector<string> result;
 
-        string::size_type start = 0;
-        string::size_type end = str.find(sep);
-        while (end != string::npos)
-        {
-            result.push_back(str.substr(start, end - start));
-            start = end + sep.length();
-            end = str.find(sep, start);
-        }
-        result.push_back(str.substr(start, end));
-        return result;
-    }
+		string::size_type start = 0;
+		string::size_type end = str.find(sep);
+		while (end != string::npos)
+		{
+			result.push_back(str.substr(start, end - start));
+			start = end + sep.length();
+			end = str.find(sep, start);
+		}
+		result.push_back(str.substr(start, end));
+		return result;
+	}
 
-    static std::pair<string, string> splitOnce(const string& str, const string& sep)
-    {
-        string::size_type pos = str.find(sep);
-        if (pos != string::npos)
-            return {str.substr(0, pos), str.substr(pos + sep.length())};
-        else
-            return {str, ""};
-    }
+	static std::pair<string, string> splitOnce(const string& str, const string& sep)
+	{
+		string::size_type pos = str.find(sep);
+		if (pos != string::npos)
+			return {str.substr(0, pos), str.substr(pos + sep.length())};
+		else
+			return {str, ""};
+	}
 };

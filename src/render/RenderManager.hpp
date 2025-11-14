@@ -10,35 +10,35 @@
 
 class RenderManager
 {
-    // =============== Construction =============== //
+	// =============== Construction =============== //
 
   public:
-    RenderManager(Game& game, Universe& universe, tgui::Gui& gui);
+	RenderManager(Game& game, Universe& universe, tgui::Gui& gui);
 
-    // ================== Setup =================== //
+	// ================== Setup =================== //
 
-    void setup();
+	void setup();
 
-    // ================== State =================== //
+	// ================== State =================== //
 
-    void update(GameTime& time);
+	void update(GameTime& time);
 
-    void render(sf::RenderTarget& target);
+	void render(sf::RenderTarget& target);
 
-    // =============== SFML Events ================ //
+	// =============== SFML Events ================ //
 
-    void handleEvent(const sf::RenderTarget& target, const sf::Event& event);
+	void handleEvent(const sf::RenderTarget& target, const sf::Event& event);
 
-    // ================ Variables ================= //
+	// ================ Variables ================= //
 
   private:
-    Game& _game;
+	Game& _game;
 
-    ResourceManager& _resourceManager;
+	ResourceManager& _resourceManager;
 
-    Universe& _universe;
+	Universe& _universe;
 
-    UIManager _uiManager;
+	UIManager _uiManager;
 
-    CameraView _cameraView;
+	CameraView _cameraView;
 };

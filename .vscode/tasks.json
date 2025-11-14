@@ -2,6 +2,15 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "clang-format",
+            "type": "shell",
+            "command": "find -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format-18 -i",
+            "options": {
+                "cwd": "${workspaceFolder}/src"
+            },
+            "group": "test"
+        },
+        {
             "label": "cmake",
             "type": "shell",
             "command": "cmake ../..",
@@ -51,7 +60,6 @@
             },
             "dependsOn": "build game"
         },
-
         // debug
         {
             "label": "debug cmake",
@@ -76,7 +84,7 @@
                 "kind": "build",
                 "isDefault": false
             },
-            "dependsOn": "debug: cmake",
+            "dependsOn": "debug cmake",
         },
     ]
 }

@@ -6,8 +6,8 @@
 
 struct Renderable
 {
-    sf::Vector2f position;
-    string textureId;
-    sf::IntRect textureRect;
-    int zIndex;
+	sf::Vector2f position;
+	string textureId;
+	sf::IntRect textureRect;
+	int zIndex;
 };

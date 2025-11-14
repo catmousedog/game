@@ -15,12 +15,9 @@ using uint = unsigned int;
 
 template <typename T> inline constexpr sf::Vector2f toVec2f(const T& t)
 {
-    return static_cast<sf::Vector2f>(t);
+	return static_cast<sf::Vector2f>(t);
 }
 template <typename T> inline constexpr sf::Vector2u toVec2u(const T& t)
 {
-    return static_cast<sf::Vector2u>(t);
+	return static_cast<sf::Vector2u>(t);
 }
-
-// debug
-#include "Error.hpp"

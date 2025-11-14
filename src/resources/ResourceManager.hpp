@@ -18,31 +18,31 @@ constexpr string RESOURCE_DIR = "resources/";
 
 class ResourceManager
 {
-    // =============== Construction =============== //
+	// =============== Construction =============== //
 
   public:
-    ResourceManager();
+	ResourceManager();
 
-    void loadTextures();
+	void loadTextures();
 
-    void loadFonts();
+	void loadFonts();
 
-    // ================= Getters ================== //
+	// ================= Getters ================== //
 
-    const sf::Font& font() const
-    {
-        return _font;
-    }
+	const sf::Font& font() const
+	{
+		return _font;
+	}
 
-    // ================ Variables ================= //
+	// ================ Variables ================= //
 
   private:
-    Path _resourceDir;
-    Path _texturePath;
-    Path _fontPath;
+	Path _resourceDir;
+	Path _texturePath;
+	Path _fontPath;
 
-    sf::Font _font;
+	sf::Font _font;
 
-    // resources
-    TextureManager _textureManager;
+	// resources
+	TextureManager _textureManager;
 };

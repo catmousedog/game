@@ -1,32 +1,25 @@
 #pragma once
 
-#include "Chunk.hpp"
 #include "util/Basic.hpp"
 
-class Game;
+#include <TGUI/Backend/SFML-Graphics.hpp>
 
-class ChunkManager
+class UIComponent
 {
-  public:
 	// =============== Construction =============== //
-
-	ChunkManager(Game& game);
+  public:
+	UIComponent(string file);
 
 	// ================== Setup =================== //
 
-	void setup();
+	void setup(tgui::Gui& gui);
 
 	// ================= Getters ================== //
 
-	vector<Chunk>& getChunks()
-	{
-		return _chunks;
-	}
+	tgui::Widget::Ptr getWidget(tgui::Gui& gui, string name);
 
 	// ================ Variables ================= //
 
   private:
-	Game& _game;
-
-	vector<Chunk> _chunks;
+	const string _file;
 };

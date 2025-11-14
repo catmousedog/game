@@ -6,22 +6,22 @@
 class WorldManager
 {
   public:
-    // =============== Construction =============== //
+	// =============== Construction =============== //
 
-    WorldManager(Game& game);
+	WorldManager(Game& game);
 
-    // ================== Setup =================== //
+	// ================== Setup =================== //
 
-    void setup();
+	void setup();
 
-    // ================= Getters ================== //
+	// ================= Getters ================== //
 
-    World& getWorld(uint index);
+	World& getWorld(uint index);
 
-    // ================ Variables ================= //
+	// ================ Variables ================= //
 
   private:
-    Game& _game;
+	Game& _game;
 
-    vector<World> _worlds;
+	vector<World> _worlds;
 };

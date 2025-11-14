@@ -1,7 +1,5 @@
 #include "UIManager.hpp"
 
-#include "util/Utils.hpp"
-
 // =============== Construction =============== //
 
 UIManager::UIManager(tgui::Gui& gui) : _gui(gui) {}
@@ -10,22 +8,22 @@ UIManager::UIManager(tgui::Gui& gui) : _gui(gui) {}
 
 void UIManager::setup()
 {
-    _gui.loadWidgetsFromFile("resources/TGUI/test.txt", false);
-
-    auto t = _gui.getWidgets().front();
-
-    if (t->getWidgetType() == "TextArea")
-    {
-        _textArea = t->cast<tgui::TextArea>();
-    }
+	_debugPanel.setup(_gui);
 }
 
 // ================== State =================== //
 
 void UIManager::update(GameTime& time)
 {
-    float tps = 20 * time.lagUpdate;
-    float fps = 60 * time.lagRender;
-    _textArea->setText(
-        StringUtils::toLower(std::to_string(tps) + " tps\n" + std::to_string(fps) + " fps"));
+	float dt = 1 / time.dt;
+	float tps = 1 / time.update;
+	float fps = 1 / time.render;
+	_debugPanel.setText(std::format("tps: {}\nups: {}\nfps: {}", dt, tps, fps));
+}
+
+// =============== SFML Events ================ //
+
+void UIManager::handleEvent(const sf::RenderTarget& target, const sf::Event& event)
+{
+	_gui.handleEvent(event);
 }

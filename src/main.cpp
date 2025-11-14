@@ -2,7 +2,7 @@
 
 int main()
 {
-    Game game;
-    game.setup();
-    game.run();
+	Game game;
+	game.setup();
+	game.run();
 }
